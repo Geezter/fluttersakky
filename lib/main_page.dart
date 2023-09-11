@@ -1,39 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:kouluharjoittelu/components/text_info.dart';
+import 'package:kouluharjoittelu/box_page.dart';
+import 'package:kouluharjoittelu/components/chat_box.dart';
 
-class MainPage extends StatelessWidget {
+
+
+class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
   @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  
+
+  @override
   build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 60),
-      decoration: const BoxDecoration(
-          gradient: RadialGradient(colors: [
-        Color.fromARGB(221, 0, 35, 131),
-        Color.fromARGB(189, 0, 10, 94)
-      ])),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(children: [
-            TextInfo('Tässä on kirjoitusta', 'Left',),
-            TextInfo('Mitäs mieltä olet tästä?', 'Right')
+   
 
-          ],
-          
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 9, 37, 108),
+        title: const Text('The Subtle Gentlebot'),
+      ),
+      body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewportConstraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints:
+                BoxConstraints(minHeight: viewportConstraints.maxHeight),
+            child: ChatBox(),
           ),
-          Column(children: [
-            TextFormField(
-
-              onChanged: (value) {
-                
-              },
-            )
-          ],)
-        ],
-      )
+        );
+      }),
     );
   }
 }

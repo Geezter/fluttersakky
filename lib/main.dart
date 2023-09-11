@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:kouluharjoittelu/box_page.dart';
+import 'package:kouluharjoittelu/front_page.dart';
 import 'package:kouluharjoittelu/main_page.dart';
 
+
 void main() {
-  runApp(MaterialApp(home: MyApp()));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 9, 37, 108),
-          title: Text('Da crap'),
-        ),
-        
-        body: 
-        MainPage());
-  }
+  runApp(MaterialApp(
+    routes: {
+        '/': (context) => FrontPage(),
+        '/mainPage': (context) => MainPage(),
+        '/boxPage': (context) => BoxPage(),
+      },
+      initialRoute: '/',
+    ));
 }
