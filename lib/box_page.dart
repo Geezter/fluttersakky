@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kouluharjoittelu/config/routes.dart';
 import 'package:kouluharjoittelu/style/styles.dart';
+
 
 enum ProfileMenu { javascript, dart, php }
 
@@ -65,12 +67,17 @@ class _BoxPageState extends State<BoxPage> {
             mainAxisSpacing: 10,
             crossAxisCount: 2,
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Color.fromARGB(255, 57, 56, 153),
-                child: const Text(
-                  "Variables",
-                  style: Styles.boxPageStyle,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(AppRoutes.codingTopic);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  color: Color.fromARGB(255, 57, 56, 153),
+                  child: const Text(
+                    "Variables",
+                    style: Styles.boxPageStyle,
+                  ),
                 ),
               ),
               Container(
