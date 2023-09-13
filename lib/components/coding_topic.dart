@@ -31,13 +31,26 @@ class _CodingTopicState extends State<CodingTopic> {
             const SizedBox(height: 24),
             Text(
               widget.topic,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white70),
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white70),
             ),
             const SizedBox(height: 30),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 8),
               height: 350,
-              decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 4), color: Colors.white),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 3),
+                  color: Colors.white),
+              child: Center(
+                child: Column(children: [
+                  SizedBox(height: 24),
+                  Text('Asiasta ${widget.language}',
+                  style: TextStyle(fontSize: 24)
+                  ),
+                ]),
+              ),
             )
           ]),
         ),
