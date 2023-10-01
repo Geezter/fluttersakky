@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kouluharjoittelu/components/text_info.dart';
+import 'package:kouluharjoittelu/config/api.dart';
 
 class ChatBox extends StatefulWidget {
   const ChatBox({super.key});
@@ -10,25 +11,35 @@ class ChatBox extends StatefulWidget {
 
 class _ChatBoxState extends State<ChatBox> {
   final TextEditingController _textEditingController = TextEditingController();
-  final Alignment leftAlignment = Alignment.centerLeft;
-  final Alignment rightAlignment = Alignment.centerRight;
   String _inputMessage = "";
-  final List<TextInfo> _msgs = [];
+  final List _msgs = [];
 
   @override
   Widget build(BuildContext context) {
+    Future<String> transferKnowledge(message) async {
+      String gptAnswer = await doShit(message);
+      return gptAnswer;
+    }
 
-    void _addmessage(alignment, name, message, sender) {
+    void _addmessage(name, message, sender) async {
       setState(() {
-        _msgs.add(TextInfo(
-          alignment: alignment,
-          name: name,
-          message: message,
-          sender: sender,
-        )
-        
+        _msgs.add(
+          TextInfo(
+            name: name,
+            message: message,
+            sender: sender,
+          ),
         );
-        
+
+      });
+      String answer = await transferKnowledge(message);
+
+      setState(() {
+        _msgs.add(
+          TextInfoBot(
+            message: answer,
+          ),
+        );
       });
     }
 
@@ -36,8 +47,8 @@ class _ChatBoxState extends State<ChatBox> {
       padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 60),
       decoration: const BoxDecoration(
           gradient: RadialGradient(colors: [
-        Color.fromARGB(221, 0, 35, 131),
-        Color.fromARGB(189, 0, 10, 94)
+        Color.fromARGB(137, 22, 0, 217),
+        Color.fromARGB(255, 0, 2, 23)
       ])),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,22 +58,34 @@ class _ChatBoxState extends State<ChatBox> {
               ..._msgs,
             ],
           ),
-          Column(
+          Row(
             children: [
-              TextFormField(
-                controller: _textEditingController,
-                onChanged: (value) {
-                  _inputMessage = value;
-                },
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Kysy jottain.. ',
+                    hintStyle: TextStyle(color: Colors.white),
+                  ),
+                  controller: _textEditingController,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  onChanged: (value) {
+                    _inputMessage = value;
+                  },
+                ),
               ),
               Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        _addmessage(rightAlignment, "Jarkko", _inputMessage, 'user');
-                        _textEditingController.clear();
-                      },
-                      child: const Text('Lähetä'))),
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _addmessage(
+                        "Jarkko", _inputMessage, 'user');
+                    _textEditingController.clear();
+                  },
+                  child: const Text('Kysy'),
+                ),
+              ),
             ],
           )
         ],

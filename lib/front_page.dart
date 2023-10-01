@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:kouluharjoittelu/main.dart';
 
 class FrontPage extends StatefulWidget {
   const FrontPage({super.key});
@@ -16,8 +14,8 @@ class _FrontPageState extends State<FrontPage> {
       body: Container(
           decoration: const BoxDecoration(
             gradient: RadialGradient(colors: [
-              Color.fromARGB(221, 124, 157, 250),
-              Color.fromARGB(189, 0, 10, 94)
+              Color.fromARGB(137, 22, 0, 217),
+              Color.fromARGB(255, 0, 2, 23)
             ]),
           ),
           //height: double.infinity,

@@ -7,15 +7,15 @@ var tsdate = DateTime.fromMillisecondsSinceEpoch(timestamp);
 class Timestamp extends StatelessWidget {
   Timestamp({super.key});
 
-  String datetime = tsdate.hour.toString() +
-      ":" +
-      tsdate.minute.toString() +
-      ":" +
-      tsdate.second.toString();
+  String datetime = "${tsdate.hour}:${tsdate.minute}:${tsdate.second}";
   
 
   @override
   Widget build(BuildContext context) {
-    return Text(datetime);
+    return Text(datetime,
+    style: TextStyle(
+      color: Colors.white,
+    ),
+    );
   }
 }

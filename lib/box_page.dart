@@ -6,7 +6,7 @@ import 'package:kouluharjoittelu/style/styles.dart';
 enum ProfileMenu { javascript, dart, php }
 
 class BoxPage extends StatefulWidget {
-  BoxPage({super.key});
+  const BoxPage({super.key});
 
   @override
   State<BoxPage> createState() => _BoxPageState();
@@ -45,9 +45,9 @@ class _BoxPageState extends State<BoxPage> {
               icon: const Icon(Icons.code),
               itemBuilder: (context) {
                 return [
-                  PopupMenuItem(child: Text('Javascript'), value: ProfileMenu.javascript),
-                  PopupMenuItem(child: Text('Dart'), value: ProfileMenu.dart),
-                  PopupMenuItem(child: Text('PHP'), value: ProfileMenu.php),
+                  const PopupMenuItem(value: ProfileMenu.javascript, child: Text('Javascript')),
+                  const PopupMenuItem(value: ProfileMenu.dart, child: Text('Dart')),
+                  const PopupMenuItem(value: ProfileMenu.php, child: Text('PHP')),
                 ];
               })
         ],
@@ -73,7 +73,7 @@ class _BoxPageState extends State<BoxPage> {
                 },
                 child: Container(
                   padding: const EdgeInsets.all(8),
-                  color: Color.fromARGB(255, 57, 56, 153),
+                  color: const Color.fromARGB(255, 57, 56, 153),
                   child: const Text(
                     "Variables",
                     style: Styles.boxPageStyle,
@@ -82,7 +82,7 @@ class _BoxPageState extends State<BoxPage> {
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                color: Color.fromARGB(255, 77, 26, 153),
+                color: const Color.fromARGB(255, 77, 26, 153),
                 child: const Text(
                   'Data types',
                   style: Styles.boxPageStyle,
@@ -90,7 +90,7 @@ class _BoxPageState extends State<BoxPage> {
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                color: Color.fromARGB(255, 27, 26, 153),
+                color: const Color.fromARGB(255, 27, 26, 153),
                 child: const Text(
                   'Control Structures',
                   style: Styles.boxPageStyle,
@@ -98,7 +98,7 @@ class _BoxPageState extends State<BoxPage> {
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                color: Color.fromARGB(255, 57, 26, 123),
+                color: const Color.fromARGB(255, 57, 26, 123),
                 child: const Text(
                   'Functions/Methods',
                   style: Styles.boxPageStyle,
@@ -106,7 +106,7 @@ class _BoxPageState extends State<BoxPage> {
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                color: Color.fromARGB(255, 57, 26, 173),
+                color: const Color.fromARGB(255, 57, 26, 173),
                 child: const Text(
                   'Arrays and Lists',
                   style: Styles.boxPageStyle,
@@ -114,7 +114,7 @@ class _BoxPageState extends State<BoxPage> {
               ),
               Container(
                 padding: const EdgeInsets.all(8),
-                color: Color.fromARGB(255, 57, 26, 173),
+                color: const Color.fromARGB(255, 57, 26, 173),
                 child: const Text(
                   'Object-Oriented Programming',
                   style: Styles.boxPageStyle,

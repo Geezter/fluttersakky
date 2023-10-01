@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:code_text_field/code_text_field.dart';
 
 // ignore: must_be_immutable
 class CodingTopic extends StatefulWidget {
@@ -32,7 +31,7 @@ class _CodingTopicState extends State<CodingTopic> {
             const SizedBox(height: 24),
             Text(
               widget.topic,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
                   color: Colors.white70),
@@ -46,9 +45,9 @@ class _CodingTopicState extends State<CodingTopic> {
                   color: Colors.white),
               child: Center(
                 child: Column(children: [
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Text('Asiasta ${widget.language}',
-                  style: TextStyle(fontSize: 24)
+                  style: const TextStyle(fontSize: 24)
                   ),
                 ]),
               ),

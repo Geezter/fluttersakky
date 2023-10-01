@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kouluharjoittelu/box_page.dart';
 import 'package:kouluharjoittelu/components/chat_box.dart';
 
 
@@ -20,7 +19,7 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 9, 37, 108),
+        backgroundColor: const Color.fromARGB(255, 9, 37, 108),
         title: const Text('The Subtle Gentlebot'),
       ),
       body: LayoutBuilder(
@@ -29,7 +28,7 @@ class _MainPageState extends State<MainPage> {
           child: ConstrainedBox(
             constraints:
                 BoxConstraints(minHeight: viewportConstraints.maxHeight),
-            child: ChatBox(),
+            child: const ChatBox(),
           ),
         );
       }),
