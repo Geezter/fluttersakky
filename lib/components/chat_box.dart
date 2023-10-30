@@ -11,7 +11,8 @@ class ChatBox extends StatefulWidget {
 
 class _ChatBoxState extends State<ChatBox> {
   final TextEditingController _textEditingController = TextEditingController();
-  String _inputMessage = "";
+  final ScrollController _scrollController = ScrollController();
+  final FocusNode _focusNode = FocusNode();
   final List _msgs = [];
 
   @override
@@ -21,75 +22,112 @@ class _ChatBoxState extends State<ChatBox> {
       return gptAnswer;
     }
 
-    void _addmessage(name, message, sender) async {
-      setState(() {
-        _msgs.add(
-          TextInfo(
-            name: name,
-            message: message,
-            sender: sender,
-          ),
-        );
-
-      });
-      String answer = await transferKnowledge(message);
-
-      setState(() {
-        _msgs.add(
-          TextInfoBot(
-            message: answer,
-          ),
-        );
-      });
+     _scrollToEnd() {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 3000),
+        curve: Curves.easeOut,
+      );
     }
 
-    return Container(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 60),
-      decoration: const BoxDecoration(
-          gradient: RadialGradient(colors: [
-        Color.fromARGB(137, 22, 0, 217),
-        Color.fromARGB(255, 0, 2, 23)
-      ])),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              ..._msgs,
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Kysy jottain.. ',
-                    hintStyle: TextStyle(color: Colors.white),
-                  ),
-                  controller: _textEditingController,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                  onChanged: (value) {
-                    _inputMessage = value;
-                  },
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    _addmessage(
-                        "Jarkko", _inputMessage, 'user');
-                    _textEditingController.clear();
-                  },
-                  child: const Text('Kysy'),
-                ),
-              ),
-            ],
-          )
-        ],
+    void _addmessage(name, message, sender) async {
+      if (message != "") {
+        setState(() {
+          _msgs.add(
+            TextInfo(
+              name: name,
+              message: message,
+              sender: sender,
+            ),
+          );
+          _textEditingController.text = "";
+        });
+        
+        print("Scroll extent: ${_scrollController.position.maxScrollExtent}");
+      }
+      _scrollToEnd();
+      if (message != "") {
+        String answer = await transferKnowledge(message);
+
+        setState(() {
+          _msgs.add(
+            TextInfoBot(
+              message: answer,
+            ),
+          );
+        });
+      }
+      _focusNode.requestFocus();
+    }
+
+   
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 9, 37, 108),
+        title: const Text('The Subtle Gentlebot'),
       ),
+      body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints viewportConstraints) {
+        return SingleChildScrollView(
+          controller: _scrollController,
+          child: ConstrainedBox(
+            constraints:
+                BoxConstraints(minHeight: viewportConstraints.maxHeight),
+            child: Container(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 60),
+              decoration: const BoxDecoration(
+                  gradient: RadialGradient(colors: [
+                Color.fromARGB(137, 22, 0, 217),
+                Color.fromARGB(255, 0, 2, 23)
+              ])),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      ..._msgs,
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: 'Kysy jottain.. ',
+                            hintStyle: TextStyle(color: Colors.white),
+                          ),
+                          controller: _textEditingController,
+                          focusNode: _focusNode,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                          onChanged: (value) {
+                            _textEditingController.text = value;
+                          },
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _addmessage(
+                                "Jarkko", _textEditingController.text, 'user');
+                            _textEditingController.clear();
+                            _scrollToEnd();
+                          },
+                          child: const Text('Kysy'),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }

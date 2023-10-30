@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kouluharjoittelu/components/chat_box.dart';
 
 
-
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -11,7 +10,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  
+  ScrollController _scrollController = ScrollController();
 
   @override
   build(BuildContext context) {
@@ -25,6 +24,7 @@ class _MainPageState extends State<MainPage> {
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
+          controller: _scrollController,
           child: ConstrainedBox(
             constraints:
                 BoxConstraints(minHeight: viewportConstraints.maxHeight),

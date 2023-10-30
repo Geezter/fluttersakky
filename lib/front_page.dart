@@ -37,7 +37,7 @@ class _FrontPageState extends State<FrontPage> {
                   borderRadius: BorderRadius.circular(500),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/mainPage');
+                      Navigator.pushNamed(context, '/chatBox');
                     },
                     child: Image.asset(
                       'assets/images/logo.png',
