@@ -18,7 +18,7 @@ class _APIState extends State<API> {
   }
 }
 
-Future<String> doShit(String prompt) async {
+Future<String> askChatAPI(String prompt) async {
   try {
     // Use the await keyword to make the HTTP POST request asynchronously.
     var response = await http.post(

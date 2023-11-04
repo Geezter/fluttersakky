@@ -18,14 +18,14 @@ class _ChatBoxState extends State<ChatBox> {
   @override
   Widget build(BuildContext context) {
     Future<String> transferKnowledge(message) async {
-      String gptAnswer = await doShit(message);
+      String gptAnswer = await askChatAPI(message);
       return gptAnswer;
     }
 
-     _scrollToEnd() {
+    _scrollToEnd() {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 3000),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     }
@@ -42,10 +42,9 @@ class _ChatBoxState extends State<ChatBox> {
           );
           _textEditingController.text = "";
         });
-        
-        print("Scroll extent: ${_scrollController.position.maxScrollExtent}");
+        _scrollToEnd();
       }
-      _scrollToEnd();
+      
       if (message != "") {
         String answer = await transferKnowledge(message);
 
@@ -59,8 +58,6 @@ class _ChatBoxState extends State<ChatBox> {
       }
       _focusNode.requestFocus();
     }
-
-   
 
     return Scaffold(
       appBar: AppBar(
@@ -78,10 +75,13 @@ class _ChatBoxState extends State<ChatBox> {
               padding: const EdgeInsets.only(
                   left: 20, right: 20, top: 20, bottom: 60),
               decoration: const BoxDecoration(
-                  gradient: RadialGradient(colors: [
-                Color.fromARGB(137, 22, 0, 217),
-                Color.fromARGB(255, 0, 2, 23)
-              ])),
+                gradient: RadialGradient(
+                  colors: [
+                    Color.fromARGB(137, 22, 0, 217),
+                    Color.fromARGB(255, 0, 2, 23)
+                  ],
+                ),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -115,7 +115,6 @@ class _ChatBoxState extends State<ChatBox> {
                             _addmessage(
                                 "Jarkko", _textEditingController.text, 'user');
                             _textEditingController.clear();
-                            _scrollToEnd();
                           },
                           child: const Text('Kysy'),
                         ),
