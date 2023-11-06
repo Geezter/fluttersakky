@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kouluharjoittelu/components/my_appBar.dart';
 import 'package:kouluharjoittelu/components/text_info.dart';
 import 'package:kouluharjoittelu/config/api.dart';
-
 class ChatBox extends StatefulWidget {
   const ChatBox({super.key});
 
@@ -29,7 +29,7 @@ class _ChatBoxState extends State<ChatBox> {
         curve: Curves.easeOut,
       );
     }
-
+    
     void _addmessage(name, message, sender) async {
       if (message != "") {
         setState(() {
@@ -44,10 +44,8 @@ class _ChatBoxState extends State<ChatBox> {
         });
         _scrollToEnd();
       }
-      
       if (message != "") {
         String answer = await transferKnowledge(message);
-
         setState(() {
           _msgs.add(
             TextInfoBot(
@@ -60,10 +58,7 @@ class _ChatBoxState extends State<ChatBox> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 9, 37, 108),
-        title: const Text('The Subtle Gentlebot'),
-      ),
+      appBar: MyAppBar(s: 'Hienovarainen HerraBotti'),
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
@@ -95,7 +90,7 @@ class _ChatBoxState extends State<ChatBox> {
                       Expanded(
                         child: TextFormField(
                           decoration: const InputDecoration(
-                            hintText: 'Kysy jottain.. ',
+                            hintText: 'Mikä askarruttaa?',
                             hintStyle: TextStyle(color: Colors.white),
                           ),
                           controller: _textEditingController,

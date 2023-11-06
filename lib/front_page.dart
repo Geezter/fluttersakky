@@ -39,9 +39,11 @@ class _FrontPageState extends State<FrontPage> {
                     onTap: () {
                       Navigator.pushNamed(context, '/chatBox');
                     },
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      width: 300,
+                    child: GestureDetector(
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 300,
+                      ),
                     ),
                   ),
                 ),

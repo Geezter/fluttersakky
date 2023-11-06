@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kouluharjoittelu/components/chat_box.dart';
+import 'package:kouluharjoittelu/chat_box.dart';
 
 
 class MainPage extends StatefulWidget {
