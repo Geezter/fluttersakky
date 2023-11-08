@@ -26,6 +26,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 s,
                 style: const TextStyle(
                   fontSize: 22.0,
+                  fontWeight: FontWeight.w300,
                   color: Color.fromARGB(240, 148, 111, 224),
                 ),
               ),
@@ -40,8 +41,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                         print('settings');
                         break;
                       case MessageMenu.about:
-                        print('about');
-                        break;
+                        Navigator.pushNamed(context, '/registrationPage');
                       default:
                     }
                   },
@@ -55,7 +55,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                           value: MessageMenu.botSettings,
                           child: Text('Botin asetukset')),
                       const PopupMenuItem(
-                          value: MessageMenu.botSettings,
+                          value: MessageMenu.about,
                           child: Text('Tietoja sovelluksesta')),
                     ];
                   },

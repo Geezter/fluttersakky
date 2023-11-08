@@ -115,7 +115,7 @@ class _ChatBoxState extends State<ChatBox> {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

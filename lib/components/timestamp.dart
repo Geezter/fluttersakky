@@ -22,8 +22,9 @@ class Timestamp extends StatelessWidget {
         return Text(
           snapshot.data ?? "",
           style: const TextStyle(
+            fontSize: 10,
             color: Color.fromARGB(255, 142, 187, 227),
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w300,
           ),
         );
       },
