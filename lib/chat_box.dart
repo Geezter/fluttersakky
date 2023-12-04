@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kouluharjoittelu/components/my_appBar.dart';
 import 'package:kouluharjoittelu/components/text_info.dart';
 import 'package:kouluharjoittelu/config/api.dart';
+import 'package:kouluharjoittelu/style/buttons.dart';
 class ChatBox extends StatefulWidget {
   const ChatBox({super.key});
 
@@ -17,6 +18,7 @@ class _ChatBoxState extends State<ChatBox> {
 
   @override
   Widget build(BuildContext context) {
+
     Future<String> transferKnowledge(message) async {
       String gptAnswer = await askChatAPI(message);
       return gptAnswer;
@@ -62,6 +64,7 @@ class _ChatBoxState extends State<ChatBox> {
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           controller: _scrollController,
           child: ConstrainedBox(
             constraints:
@@ -71,9 +74,10 @@ class _ChatBoxState extends State<ChatBox> {
                   left: 20, right: 20, top: 20, bottom: 60),
               decoration: const BoxDecoration(
                 gradient: RadialGradient(
+                  tileMode: TileMode.mirror,
                   colors: [
-                    Color.fromARGB(137, 22, 0, 217),
-                    Color.fromARGB(255, 0, 2, 23)
+                    Color.fromARGB(255, 230, 232, 250),
+                    Color.fromARGB(255, 230, 232, 250)
                   ],
                 ),
               ),
@@ -90,13 +94,18 @@ class _ChatBoxState extends State<ChatBox> {
                       Expanded(
                         child: TextFormField(
                           decoration: const InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ), // Set your desired color
+                                  ),
                             hintText: 'Mikä askarruttaa?',
-                            hintStyle: TextStyle(color: Colors.white),
+                            hintStyle: TextStyle(color: Color.fromARGB(255, 70, 70, 70)),
                           ),
                           controller: _textEditingController,
                           focusNode: _focusNode,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
                           onChanged: (value) {
                             _textEditingController.text = value;
@@ -106,12 +115,23 @@ class _ChatBoxState extends State<ChatBox> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            return Colors.white;
+                          }),
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            return myButtonBackgroundColor;
+                          }),
+                        ),
                           onPressed: () {
                             _addmessage(
                                 "Jarkko", _textEditingController.text, 'user');
                             _textEditingController.clear();
                           },
-                          child: const Text('Kysy'),
+                          child: const Text('Kysy',
+                          ),
                         ),
                       ),
                     ],

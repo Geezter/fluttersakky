@@ -27,12 +27,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 style: const TextStyle(
                   fontSize: 22.0,
                   fontWeight: FontWeight.w300,
-                  color: Color.fromARGB(240, 148, 111, 224),
+                  color: Color.fromARGB(239, 255, 255, 255),
                 ),
               ),
               GestureDetector(
                 child: PopupMenuButton<MessageMenu>(
-                  color: Color.fromARGB(239, 106, 44, 231),
+                  color: Color.fromARGB(238, 255, 255, 255),
                   onSelected: (value) {
                     switch (value) {
                       case MessageMenu.editProfile:

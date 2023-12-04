@@ -12,7 +12,7 @@ Future<String> getDate() async {
 }
 
 class Timestamp extends StatelessWidget {
-  Timestamp({super.key});
+  const Timestamp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class Timestamp extends StatelessWidget {
         return Text(
           snapshot.data ?? "",
           style: const TextStyle(
-            fontSize: 10,
-            color: Color.fromARGB(255, 142, 187, 227),
+            fontSize: 12,
+            color: Color.fromARGB(255, 70, 70, 70),
             fontWeight: FontWeight.w300,
           ),
         );

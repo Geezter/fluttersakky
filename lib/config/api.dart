@@ -33,9 +33,57 @@ Future<String> askChatAPI(String prompt) async {
       var jsonResponse = convert.jsonDecode(response.body) as String;
       return jsonResponse;
     } else {
-      return('Request failed with status: ${response.statusCode}.');
+      return ('Request failed with status: ${response.statusCode}.');
     }
   } catch (error) {
-    return('Error: $error');
+    return ('Error: $error');
+  }
+}
+
+Future<String> register(String email, String username) async {
+  try {
+    print(email);
+    print(username);
+    // Use the await keyword to make the HTTP POST request asynchronously.
+    var response = await http.post(
+      Uri.parse('http://localhost:3000/api/register'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: convert.jsonEncode({'email': email, 'username': username}),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = await convert.jsonDecode(response.body);
+      print(jsonResponse['userSaveResponse']['message']);
+      return jsonResponse['userSaveResponse']['message'];
+    } else {
+      return ('Request failed with status: ${response.statusCode}.');
+    }
+  } catch (error) {
+    return ('Error: $error');
+  }
+}
+
+Future<String> verify(String code) async {
+  try {
+    // Use the await keyword to make the HTTP POST request asynchronously.
+    var response = await http.post(
+      Uri.parse('http://localhost:3000/api/verify'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: convert.jsonEncode({'code': code}),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = convert.jsonDecode(response.body);
+      
+      return jsonResponse['message'];
+    } else {
+      return ('Request failed with status: ${response.statusCode}.');
+    }
+  } catch (error) {
+    return ('Error: $error');
   }
 }

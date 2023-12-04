@@ -28,9 +28,9 @@ class TextInfo extends StatelessWidget {
             maxWidth: double.infinity - 20,
           ),
           decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color.fromARGB(255, 47, 0, 104),
-                Color.fromARGB(255, 0, 71, 178),
+              gradient: LinearGradient(tileMode: TileMode.mirror, colors: [
+                Color.fromARGB(184, 255, 255, 255),
+                Color.fromARGB(255, 255, 255, 255),
               ]),
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(20),
@@ -59,7 +59,8 @@ class TextInfo extends StatelessWidget {
                     itemBuilder: (context) {
                       return [
                         const PopupMenuItem(
-                            value: MessageMenu.edit, child: Text('Edit Profile')),
+                            value: MessageMenu.edit,
+                            child: Text('Edit Profile')),
                         const PopupMenuItem(
                             value: MessageMenu.delete, child: Text('Delete')),
                       ];
@@ -67,11 +68,21 @@ class TextInfo extends StatelessWidget {
                   ),
                 ],
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  'assets/images/user_logo.png',
-                  width: 75,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(500),
+                  border: Border.all(
+                    color: const Color.fromARGB(
+                        255, 187, 187, 187), // Set border color
+                    width: 1.0, // Set border width
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    'assets/images/user_logo.png',
+                    width: 75,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
@@ -79,7 +90,7 @@ class TextInfo extends StatelessWidget {
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: const Color.fromARGB(255, 34, 4, 86),
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
                 child: const Text(
                   'You',
@@ -95,7 +106,7 @@ class TextInfo extends StatelessWidget {
                   child: Text(
                     message,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 16,
                     ),
                   ),
@@ -132,8 +143,8 @@ class TextInfoBot extends StatelessWidget {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(255, 51, 1, 101),
-                Color.fromARGB(255, 11, 44, 94)
+                Color.fromARGB(255, 255, 255, 255),
+                Color.fromARGB(255, 224, 224, 224),
               ],
               end: Alignment.centerLeft,
               begin: Alignment.centerRight,
@@ -176,11 +187,21 @@ class TextInfoBot extends StatelessWidget {
                   ),
                 ],
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  width: 75,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(500),
+                  border: Border.all(
+                    color: const Color.fromARGB(
+                        255, 187, 187, 187), // Set border color
+                    width: 1.0, // Set border width
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    'assets/images/logo2zoom.png',
+                    width: 75,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
@@ -188,12 +209,13 @@ class TextInfoBot extends StatelessWidget {
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: const Color.fromARGB(255, 34, 4, 86),
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
                 child: const Text(
-                  'The Gentlebot',
+                  'Herrabotti',
                   style: TextStyle(
-                      fontWeight: FontWeight.w500, color: Colors.white),
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 225, 225, 225)),
                 ),
               ),
               const SizedBox(height: 12),
@@ -204,7 +226,7 @@ class TextInfoBot extends StatelessWidget {
                   child: Text(
                     message,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 18,
                       wordSpacing: 4,
                     ),
