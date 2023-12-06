@@ -42,7 +42,7 @@ class TextInfo extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const Padding(padding: EdgeInsets.only(left: 8)),
-                  Timestamp(),
+                  const Timestamp(),
                   const Spacer(),
                   PopupMenuButton<MessageMenu>(
                     onSelected: (value) {

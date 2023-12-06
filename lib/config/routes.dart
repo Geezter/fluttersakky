@@ -1,6 +1,7 @@
 import 'package:kouluharjoittelu/box_page.dart';
 import 'package:kouluharjoittelu/chat_box.dart';
 import 'package:kouluharjoittelu/components/coding_topic.dart';
+import 'package:kouluharjoittelu/verification_page.dart';
 import 'package:kouluharjoittelu/front_page.dart';
 import 'package:kouluharjoittelu/profile_page.dart';
 import 'package:kouluharjoittelu/registration_page.dart';
@@ -11,9 +12,11 @@ class AppRoutes {
     front: (context) => const ChatBox(),
     box: (context) => const BoxPage(),
     codingTopic: (context) =>
-        CodingTopic(language: "JavaScript", topic: "Plärinää"),
+      CodingTopic(language: "JavaScript", topic: "Plärinää"),
     profilePage: (context) => const ProfilePage(),
     registrationPage: (context) => const RegistrationPage(),
+    verificationPage: (context) => 
+      VerificationPage(verificationEmail: verificationEmail),
   };
 
   static const main = '/';
@@ -22,4 +25,5 @@ class AppRoutes {
   static const codingTopic = '/codingTopic';
   static const profilePage = '/profilePage';
   static const registrationPage = '/registrationPage';
+  static const verificationPage = '/verificationPage';
 }

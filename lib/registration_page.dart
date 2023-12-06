@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kouluharjoittelu/components/fields/registration_items.dart';
 import 'package:kouluharjoittelu/components/my_appBar.dart';
 import 'package:kouluharjoittelu/config/api.dart';
 import 'package:kouluharjoittelu/style/buttons.dart';
+import 'package:kouluharjoittelu/style/styles.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -10,6 +10,8 @@ class RegistrationPage extends StatefulWidget {
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
+
+String verificationEmail = "";
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _usernameEditingController =
@@ -21,10 +23,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     Future<String> transferKnowledge(
         _usernameEditingController, _emailEditingController) async {
-      var email = _emailEditingController.text;
-      var username = _usernameEditingController.text;
+      final String email = _emailEditingController.text;
+      final String username = _usernameEditingController.text;
       String registered = await register(email, username);
       return registered;
+    }
+
+    void verify(verificationEmail) {
+      print(verificationEmail + ' going to navigation');
+      Navigator.pushNamed(context, '/verificationPage',
+          arguments: verificationEmail);
     }
 
     void _register(_usernameEditingController, _emailEditingController) async {
@@ -32,6 +40,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           _usernameEditingController, _emailEditingController);
       if (registeringResponse == 'ok') {
         print('sitten verifiointihommiin');
+        verify(_emailEditingController.text);
       }
     }
 
@@ -111,8 +120,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           Radius.circular(5),
                         ),
                         border: Border.all(
-                          color: const Color.fromARGB(
-                              255, 187, 187, 187), // Set border color
+                          color: Styles.botGray, // Set border color
                           width: 1.0, // Set border width
                         ),
                       ),
@@ -241,7 +249,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 32,
+                      height: 64,
                     ),
                     //const Spacer(),
                     SizedBox(
@@ -279,11 +287,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       onPressed: () {
                         print('Kirjaudu sisään');
                       },
-                      child: const Text(
+                      child: Text(
                         'Kirjaudu sisään',
                         style: TextStyle(
                           decoration: TextDecoration.underline,
-                          color: Colors.black,
+                          color: Styles.botGray,
                         ),
                       ),
                     ),

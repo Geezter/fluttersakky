@@ -34,9 +34,9 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Container(
                 padding: const EdgeInsets.all(0),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   //border: Border.all(color: Colors.purple),
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                       begin: Alignment.bottomRight,
                       end: Alignment.topLeft,
                       colors: [

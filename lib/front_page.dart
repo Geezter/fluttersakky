@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kouluharjoittelu/style/styles.dart';
 
 class FrontPage extends StatefulWidget {
   const FrontPage({super.key});
@@ -14,9 +15,10 @@ class _FrontPageState extends State<FrontPage> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: RadialGradient(
+            radius: BorderSide.strokeAlignOutside,
             colors: [
-              Color.fromARGB(137, 22, 0, 217),
-              Color.fromARGB(255, 0, 2, 23)
+              Color.fromARGB(255, 255, 255, 255),
+              Color.fromARGB(255, 255, 255, 255)
             ],
           ),
         ),
@@ -29,10 +31,10 @@ class _FrontPageState extends State<FrontPage> {
               const SizedBox(
                 height: 100,
                 child: Text(
-                  'Well hello there,',
+                  '',
                   style: TextStyle(
                     fontSize: 30,
-                    color: Colors.blueAccent,
+                    color: Color.fromARGB(255, 0, 0, 0),
                     decoration: TextDecoration.none,
                   ),
                 ),
@@ -44,7 +46,7 @@ class _FrontPageState extends State<FrontPage> {
                     Navigator.pushNamed(context, '/chatBox');
                   },
                   child: Image.asset(
-                    'assets/images/logo.png',
+                    'assets/images/logo2.png',
                     width: 300,
                   ),
                 ),
