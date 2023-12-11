@@ -17,6 +17,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _usernameEditingController =
       TextEditingController();
   final TextEditingController _emailEditingController = TextEditingController();
+  bool isThisEnabled = true;
 
   final double itemSize = 24;
   @override
@@ -36,12 +37,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
 
     void _register(_usernameEditingController, _emailEditingController) async {
+      setState(() {
+        isThisEnabled = false;
+      });
+
       var registeringResponse = await transferKnowledge(
           _usernameEditingController, _emailEditingController);
       if (registeringResponse == 'ok') {
         print('sitten verifiointihommiin');
         verify(_emailEditingController.text);
       }
+      isThisEnabled = true;
     }
 
     final screenHeight = MediaQuery.of(context).size.height - 150;
@@ -137,6 +143,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             child: SizedBox(
                               //height: 32,
                               child: TextFormField(
+                                enabled: isThisEnabled,
                                 decoration: const InputDecoration(
                                   hintText: 'Käyttäjänimi',
                                   border: InputBorder.none,
@@ -208,6 +215,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             child: SizedBox(
                               //height: 32,
                               child: TextFormField(
+                                enabled: isThisEnabled,
                                 decoration: const InputDecoration(
                                   hintText: 'sinunposti@jotain.fi',
                                   border: InputBorder.none,
@@ -267,7 +275,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }),
                         ),
                         onPressed: () {
-                          print('You registered you little bitch!');
                           _register(_usernameEditingController,
                               _emailEditingController);
                           //_usernameEditingController.text = "";

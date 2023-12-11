@@ -22,8 +22,9 @@ class _ConfirmationPageState extends State<VerificationPage> {
     final String verificationEmail = arguments;
     print('verification with modal ${verificationEmail}');
     Future<String> transferKnowledge(verificationController) async {
+      print("e-mail: ${verificationEmail}");
       String code = verificationController.text;
-      String verified = await verify(widget.verificationEmail, code);
+      String verified = await verifyThis(verificationEmail, code);
       return verified;
     }
 
@@ -32,8 +33,9 @@ class _ConfirmationPageState extends State<VerificationPage> {
     void _verify(verificationController) async {
       print('menossa apiin');
       print(verificationController.text);
-      var verificationResponse =
+      String? verificationResponse =
           await transferKnowledge(verificationController);
+      print("response: ${verificationResponse}");
       if (verificationResponse == 'ok') {
         print('verifiointi tehty');
       }
@@ -120,9 +122,9 @@ class _ConfirmationPageState extends State<VerificationPage> {
                           //_usernameEditingController.text = "";
                           //_emailEditingController.text = "";
                         },
-                        icon: const Icon(Icons.app_registration),
+                        icon: const Icon(Icons.verified_user_outlined),
                         label: const Text(
-                          'Varmenna',
+                          'Vahvista',
                           style: TextStyle(
                             fontSize: 16,
                           ),

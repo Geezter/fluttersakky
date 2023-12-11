@@ -212,7 +212,7 @@ class TextInfoBot extends StatelessWidget {
                   color: Color.fromARGB(255, 0, 0, 0),
                 ),
                 child: const Text(
-                  'Herrabotti',
+                  'Botti',
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Color.fromARGB(255, 225, 225, 225)),

@@ -65,12 +65,10 @@ Future<String> register(String email, String username) async {
   }
 }
 
-Future<String> verify(String? verificationEmail, String code) async {
+Future<String> verifyThis(String verificationEmail, String code) async {
   try {
-    if (verificationEmail == null) {
-      return 'no_email';
-    }
-    print('here in the api' + verificationEmail);
+    print(code);
+    print('here in the api ${verificationEmail}');
     // Use the await keyword to make the HTTP POST request asynchronously.
     var response = await http.post(
       Uri.parse('http://localhost:3000/api/verify'),
@@ -79,10 +77,10 @@ Future<String> verify(String? verificationEmail, String code) async {
       },
       body: convert.jsonEncode({'email': verificationEmail, 'code': code}),
     );
-
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      var jsonResponse = convert.jsonDecode(response.body);
-
+      var jsonResponse = await convert.jsonDecode(response.body);
+      print("body: ${response.body}");
       return jsonResponse['message'];
     } else {
       return ('Request failed with status: ${response.statusCode}.');

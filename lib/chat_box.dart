@@ -60,7 +60,7 @@ class _ChatBoxState extends State<ChatBox> {
     }
 
     return Scaffold(
-      appBar: MyAppBar(s: 'Hienovarainen HerraBotti'),
+      appBar: MyAppBar(s: 'Botti'),
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
