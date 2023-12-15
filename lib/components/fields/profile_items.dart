@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kouluharjoittelu/style/styles.dart';
 
 class ProfileItem extends StatefulWidget {
   const ProfileItem({
@@ -9,10 +10,9 @@ class ProfileItem extends StatefulWidget {
 
   final String myTitle;
   final IconData myIcon;
-  
+
   @override
   State<ProfileItem> createState() => _ProfileItemState();
-  
 }
 
 class _ProfileItemState extends State<ProfileItem> {
@@ -25,8 +25,8 @@ class _ProfileItemState extends State<ProfileItem> {
       width: double.infinity,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      decoration: const BoxDecoration(
-        color: Color.fromARGB(53, 107, 23, 122),
+      decoration: BoxDecoration(
+        color: Styles.botGray,
         //borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Row(
@@ -40,13 +40,13 @@ class _ProfileItemState extends State<ProfileItem> {
           const SizedBox(width: 12),
           Expanded(
             child: SizedBox(
-              //height: 32,
+              height: 32,
               child: TextFormField(
                 controller: _textEditingController,
                 onChanged: (value) {
                   _textEditingController.text = value;
                 },
-                initialValue: widget.myTitle,
+                //initialValue: widget.myTitle,
                 style: TextStyle(
                     fontSize: itemSize,
                     color: Colors.white,

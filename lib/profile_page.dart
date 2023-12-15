@@ -16,22 +16,45 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: MyAppBar(s: 'Oma profiili'),
       body: Container(
         width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.bottomRight,
             end: Alignment.topLeft,
             colors: [
-              Color.fromARGB(255, 49, 1, 121),
-              Color.fromARGB(255, 0, 2, 23)
+              Color.fromARGB(255, 193, 193, 193),
+              Color.fromARGB(255, 230, 232, 250)
             ],
           ),
         ),
         //transform: Matrix4.identity()..scale(1.5),
         child: Container(
-          margin: EdgeInsets.all(16),
-          height: double.infinity,
+          margin: const EdgeInsets.all(16),
           child: Column(
             children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(500),
+                  border: Border.all(
+                    color: const Color.fromARGB(
+                        255, 187, 187, 187), // Set border color
+                    width: 1.0, // Set border width
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(500),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/chatBox');
+                    },
+                    child: Image.asset(
+                      'assets/images/anonymous_user.png',
+                      width: 150,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(0),
                 decoration: const BoxDecoration(
@@ -40,19 +63,17 @@ class _ProfilePageState extends State<ProfilePage> {
                       begin: Alignment.bottomRight,
                       end: Alignment.topLeft,
                       colors: [
-                        Color.fromARGB(64, 16, 15, 56),
-                        Colors.transparent
+                        Color.fromARGB(255, 221, 221, 221),
+                        Color.fromARGB(255, 222, 222, 222)
                       ]),
                 ),
                 child: const Column(
                   children: [
                     ProfileItem(
-                        myIcon: Icons.account_circle,
-                        myTitle: 'Pena Kamala'),
+                        myIcon: Icons.account_circle, myTitle: 'Pena Kamala'),
                     SizedBox(height: 8),
                     ProfileItem(
-                        myIcon: Icons.email,
-                        myTitle: 'kamapena@hotmail.com'),
+                        myIcon: Icons.email, myTitle: 'kamapena@hotmail.com'),
                     SizedBox(
                       height: 8,
                     ),
@@ -61,8 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         myTitle: 'Kellohommia'),
                     SizedBox(height: 8),
                     SizedBox(height: 8),
-                    ProfileItem(
-                        myIcon: Icons.add_circle, myTitle: 'Tämmöstä'),
+                    ProfileItem(myIcon: Icons.add_circle, myTitle: 'Tämmöstä'),
                     SizedBox(height: 8),
                   ],
                 ),

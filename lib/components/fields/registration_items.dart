@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kouluharjoittelu/style/buttons.dart';
+import 'package:kouluharjoittelu/style/styles.dart';
 
 class ProfileItem extends StatelessWidget {
   const ProfileItem(
@@ -20,8 +22,8 @@ class ProfileItem extends StatelessWidget {
       width: double.infinity,
       alignment: Alignment.centerLeft,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 149, 25, 171),
+      decoration: BoxDecoration(
+        color: Styles.botGray,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Row(

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "917484169316",
+    "firebase_url": "https://chatgpt-bot-d0a84-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "chatgpt-bot-d0a84",
+    "storage_bucket": "chatgpt-bot-d0a84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917484169316:android:a22cd593622a00ce429771",
+        "android_client_info": {
+          "package_name": "com.example.kouluharjoittelu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS2nwjte4wOBgyMYMsNO9Tt_684TYmItg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

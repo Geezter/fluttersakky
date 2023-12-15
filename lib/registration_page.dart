@@ -54,7 +54,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: MyAppBar(s: 'Rekisteröidy'),
+      appBar: MyAppBar(s: 'Kirjaudu sisään'),
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
@@ -108,7 +108,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      '"PIM! Olet hypnotisoitu. Rekisteröidy."',
+                      '"PIM! Olet hypnotisoitu. Kirjaudu."',
                       style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                       textAlign: TextAlign.center,
                     ),
@@ -282,9 +282,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         },
                         icon: const Icon(Icons.app_registration),
                         label: const Text(
-                          'Rekisteröidy',
+                          'Kirjaudu',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 18,
                           ),
                         ),
                       ),
