@@ -28,6 +28,11 @@ class _ConfirmationPageState extends State<VerificationPage> {
       return verified;
     }
 
+    void advance() {
+          print('advancing to verify done');
+          Navigator.pushNamed(context, '/userVerifiedPage');
+        }
+
     final screenHeight = MediaQuery.of(context).size.height - 150;
 
     void _verify(verificationController) async {
@@ -36,11 +41,13 @@ class _ConfirmationPageState extends State<VerificationPage> {
       String? verificationResponse =
           await transferKnowledge(verificationController);
       print("response: ${verificationResponse}");
-      if (verificationResponse == 'ok') {
+      if (verificationResponse == 'token') {
         print('verifiointi tehty');
+        advance();
       }
-      //Navigator.pushNamed(context, '/verificationPage');
     }
+
+    
 
     return Scaffold(
       resizeToAvoidBottomInset: true,

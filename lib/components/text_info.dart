@@ -80,24 +80,24 @@ class TextInfo extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Image.asset(
-                    'assets/images/user_logo.png',
+                    'assets/images/anonymous_user.png',
                     width: 75,
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Color.fromARGB(255, 0, 0, 0),
-                ),
-                child: const Text(
-                  'You',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500, color: Colors.white),
-                ),
-              ),
+              // Container(
+              //   padding: const EdgeInsets.all(6),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(30),
+              //     color: Color.fromARGB(255, 0, 0, 0),
+              //   ),
+              //   child: const Text(
+              //     'You',
+              //     style: TextStyle(
+              //         fontWeight: FontWeight.w500, color: Colors.white),
+              //   ),
+              // ),
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(8),
@@ -199,32 +199,33 @@ class TextInfoBot extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Image.asset(
-                    'assets/images/logo2zoom.png',
+                    'assets/images/logo3.png',
                     width: 75,
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Color.fromARGB(255, 0, 0, 0),
-                ),
-                child: const Text(
-                  'Botti',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 225, 225, 225)),
-                ),
-              ),
+              // Container(
+              //   padding: const EdgeInsets.all(6),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(30),
+              //     color: Color.fromARGB(255, 0, 0, 0),
+              //   ),
+              //   child: const Text(
+              //     'Botti',
+              //     style: TextStyle(
+              //         fontWeight: FontWeight.w500,
+              //         color: Color.fromARGB(255, 225, 225, 225)),
+              //   ),
+              // ),
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(8),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(
+                  child: SelectableText(
                     message,
+                    showCursor: true,
                     style: const TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 18,

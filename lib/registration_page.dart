@@ -100,7 +100,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             Navigator.pushNamed(context, '/chatBox');
                           },
                           child: Image.asset(
-                            'assets/images/logo2zoom.png',
+                            'assets/images/logo3.png',
                             width: 150,
                           ),
                         ),

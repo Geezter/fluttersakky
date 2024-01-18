@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kouluharjoittelu/style/styles.dart';
-import 'package:kouluharjoittelu/style/buttons.dart';
 
 class FrontPage extends StatefulWidget {
   const FrontPage({super.key});
@@ -31,15 +30,16 @@ class _FrontPageState extends State<FrontPage> {
             children: [
               const Spacer(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(4)),
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 255, 255, 255),
                 ),
                 child: Text(
                   'Chatbot 2029',
                   style: TextStyle(
-                    backgroundColor: Colors.black,
+                    backgroundColor: const Color.fromARGB(255, 252, 252, 252),
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
                     color: Styles.botGray,
@@ -55,7 +55,7 @@ class _FrontPageState extends State<FrontPage> {
                     Navigator.pushNamed(context, '/chatBox');
                   },
                   child: Image.asset(
-                    'assets/images/logo2.png',
+                    'assets/images/logo3.png',
                     width: 300,
                   ),
                 ),
@@ -69,33 +69,24 @@ class _FrontPageState extends State<FrontPage> {
                     Container(
                       height: 100,
                       width: 350,
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                      child: ElevatedButton.icon(
-                        style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.resolveWith(
-                            (states) {
-                              return Colors.white;
-                            },
-                          ),
-                          backgroundColor:
-                              MaterialStateProperty.resolveWith((states) {
-                            return myButtonBackgroundColor;
-                          }),
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/registrationPage');
-                        },
-                        icon: const Icon(
-                          Icons.account_circle_outlined,
-                          color: Colors.white,
-                          size: 32,
-                        ),
-                        label: const Text(
-                          'Aktivoi',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                          ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 10),
+                      child: Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: (() {
+                                Navigator.pushNamed(
+                                    context, '/registrationPage');
+                              }),
+                              child: const Text(
+                                'Aktivoi',
+                                style: TextStyle(fontSize: 34),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
