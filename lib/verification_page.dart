@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kouluharjoittelu/components/my_appBar.dart';
 import 'package:kouluharjoittelu/style/buttons.dart';
 import 'package:kouluharjoittelu/config/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationPage extends StatefulWidget {
   final String? verificationEmail;
@@ -15,12 +16,15 @@ class VerificationPage extends StatefulWidget {
 class _ConfirmationPageState extends State<VerificationPage> {
   final TextEditingController _verificationEditingController =
       TextEditingController();
+  late Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   final double itemSize = 24;
   @override
   Widget build(BuildContext context) {
     final dynamic arguments = ModalRoute.of(context)!.settings.arguments;
     final String verificationEmail = arguments;
     print('verification with modal ${verificationEmail}');
+
     Future<String> transferKnowledge(verificationController) async {
       print("e-mail: ${verificationEmail}");
       String code = verificationController.text;
@@ -29,25 +33,26 @@ class _ConfirmationPageState extends State<VerificationPage> {
     }
 
     void advance() {
-          print('advancing to verify done');
-          Navigator.pushNamed(context, '/userVerifiedPage');
-        }
+      print('advancing to verify done');
+      Navigator.pushNamed(context, '/userVerifiedPage');
+    }
 
     final screenHeight = MediaQuery.of(context).size.height - 150;
 
     void _verify(verificationController) async {
+      final SharedPreferences prefs = await _prefs;
       print('menossa apiin');
       print(verificationController.text);
       String? verificationResponse =
-          await transferKnowledge(verificationController);
+        await transferKnowledge(verificationController);
       print("response: ${verificationResponse}");
-      if (verificationResponse == 'token') {
-        print('verifiointi tehty');
+      if (verificationResponse != 'failed') {
+        final String token = verificationResponse;
+        print('verifiointi tehty, token:  ' + token);
+        //await prefs.setString('token', token);
         advance();
       }
     }
-
-    
 
     return Scaffold(
       resizeToAvoidBottomInset: true,

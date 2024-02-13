@@ -103,8 +103,9 @@ class TextInfo extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(
+                  child: SelectableText(
                     message,
+                    showCursor: true,
                     style: const TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),
                       fontSize: 16,

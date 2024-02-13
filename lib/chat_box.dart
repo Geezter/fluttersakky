@@ -3,6 +3,9 @@ import 'package:kouluharjoittelu/components/my_appBar.dart';
 import 'package:kouluharjoittelu/components/text_info.dart';
 import 'package:kouluharjoittelu/config/api.dart';
 import 'package:kouluharjoittelu/style/buttons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:auto_scroll/auto_scroll.dart';
+
 class ChatBox extends StatefulWidget {
   const ChatBox({super.key});
 
@@ -20,7 +23,9 @@ class _ChatBoxState extends State<ChatBox> {
   Widget build(BuildContext context) {
 
     Future<String> transferKnowledge(message) async {
-      String gptAnswer = await askChatAPI(message);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? token = prefs.getString('token');
+      String gptAnswer = await askChatAPI(token, message);
       return gptAnswer;
     }
 
@@ -66,6 +71,7 @@ class _ChatBoxState extends State<ChatBox> {
         return SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           controller: _scrollController,
+          scrollDirection: Axis.vertical,
           child: ConstrainedBox(
             constraints:
                 BoxConstraints(minHeight: viewportConstraints.maxHeight),

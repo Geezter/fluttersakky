@@ -35,7 +35,8 @@ class UserVerifiedPage extends StatelessWidget {
                 //height: screenHeight,
                 child: Column(
                   children: [
-                    SizedBox(height: 120),
+                    Spacer(),
+                    //SizedBox(height: 120),
                     SizedBox(
                       height: 64,
                       width: 170,

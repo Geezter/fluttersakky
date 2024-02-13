@@ -18,7 +18,7 @@ class _APIState extends State<API> {
   }
 }
 
-Future<String> askChatAPI(String prompt) async {
+Future<String> askChatAPI(String? token, String prompt) async {
   try {
     // Use the await keyword to make the HTTP POST request asynchronously.
     var response = await http.post(
@@ -26,7 +26,7 @@ Future<String> askChatAPI(String prompt) async {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: convert.jsonEncode({'prompt': prompt}),
+      body: convert.jsonEncode({'token': token, 'prompt': prompt}),
     );
 
     if (response.statusCode == 200) {
@@ -40,26 +40,45 @@ Future<String> askChatAPI(String prompt) async {
   }
 }
 
-Future<String> register(String email, String username) async {
+Future<String> handshake(String token) async {
   try {
-    print(email);
-    print(username);
-    // Use the await keyword to make the HTTP POST request asynchronously.
     var response = await http.post(
-      Uri.parse('http://localhost:3000/api/register'),
+      Uri.parse('http://localhost:3000/api/handshake'),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: convert.jsonEncode({'email': email, 'username': username}),
+      body: convert.jsonEncode({'token': token}),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = response.body;
+      print('success on handshake');
+      return jsonResponse;
+    }
+    print('failed on handshake');
+    return 'failed';
+    //('Request failed with status: ${response.statusCode}.');
+  } catch (error) {
+    return ('Error: $error');
+  }
+}
+
+Future<String> login(String email) async {
+  try {
+    // Use the await keyword to make the HTTP POST request asynchronously.
+    var response = await http.post(
+      Uri.parse('http://localhost:3000/api/login'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: convert.jsonEncode({'email': email}),
     );
 
     if (response.statusCode == 200) {
       var jsonResponse = await convert.jsonDecode(response.body);
-      print(jsonResponse['userSaveResponse']['message']);
-      return jsonResponse['userSaveResponse']['message'];
-    } else {
-      return ('Request failed with status: ${response.statusCode}.');
+      return jsonResponse['token'];
     }
+    return ('Request failed with status: ${response.statusCode}.');
   } catch (error) {
     return ('Error: $error');
   }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kouluharjoittelu/style/styles.dart';
+import 'package:kouluharjoittelu/config/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert' as convert;
 
 class FrontPage extends StatefulWidget {
   const FrontPage({super.key});
@@ -9,6 +12,45 @@ class FrontPage extends StatefulWidget {
 }
 
 class _FrontPageState extends State<FrontPage> {
+  late Map<String, dynamic> handshakeResult;
+
+  Future<void> _performHandshake() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    //await prefs.setString('token', '');
+    final String? token = prefs.getString('token');
+    print(token);
+    if (token != null && token != 'token') {
+      var verified = await handshake(token);
+      print(verified.runtimeType);
+      handshakeResult = convert.jsonDecode(verified);
+      print(handshakeResult['message']);
+      goAhead(handshakeResult);
+    }
+  }
+
+  void goAhead(handshakeResult) {
+    if (handshakeResult['message'] == 'register') {
+      Navigator.pushNamed(context, '/registrationPage');
+    }
+    print(handshakeResult);
+
+    if (handshakeResult['message'] == "verify") {
+      print('isnt this on');
+      Navigator.pushNamed(context, '/verificationPage',
+          arguments: handshakeResult['email']);
+    }
+    if (handshakeResult['message'] == 'ok') {
+      Navigator.pushNamed(context, '/chatBox');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _performHandshake();
+  }
+
+  //initState();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

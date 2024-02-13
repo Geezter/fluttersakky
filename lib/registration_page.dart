@@ -3,6 +3,8 @@ import 'package:kouluharjoittelu/components/my_appBar.dart';
 import 'package:kouluharjoittelu/config/api.dart';
 import 'package:kouluharjoittelu/style/buttons.dart';
 import 'package:kouluharjoittelu/style/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -14,19 +16,17 @@ class RegistrationPage extends StatefulWidget {
 String verificationEmail = "";
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final TextEditingController _usernameEditingController =
-      TextEditingController();
   final TextEditingController _emailEditingController = TextEditingController();
   bool isThisEnabled = true;
 
   final double itemSize = 24;
   @override
   Widget build(BuildContext context) {
+
     Future<String> transferKnowledge(
-        _usernameEditingController, _emailEditingController) async {
+      _emailEditingController) async {
       final String email = _emailEditingController.text;
-      final String username = _usernameEditingController.text;
-      String registered = await register(email, username);
+      String registered = await login(email);
       return registered;
     }
 
@@ -36,15 +36,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
           arguments: verificationEmail);
     }
 
-    void _register(_usernameEditingController, _emailEditingController) async {
+    void _register(_emailEditingController) async {
       setState(() {
         isThisEnabled = false;
       });
 
-      var registeringResponse = await transferKnowledge(
-          _usernameEditingController, _emailEditingController);
-      if (registeringResponse == 'ok') {
-        print('sitten verifiointihommiin');
+      String registeringResponse = await transferKnowledge(
+        _emailEditingController);
+      if (registeringResponse.isNotEmpty) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', registeringResponse);
+        print('response on registering: ' + registeringResponse);
         verify(_emailEditingController.text);
       }
       isThisEnabled = true;
@@ -82,8 +84,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 height: screenHeight,
                 child: Column(
                   children: [
-                    const SizedBox(height: 32),
-                    //const Spacer(),
+                    //const SizedBox(height: 32),
+                    const Spacer(),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(500),
@@ -101,7 +103,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           },
                           child: Image.asset(
                             'assets/images/logo3.png',
-                            width: 150,
+                            width: 200,
                           ),
                         ),
                       ),
@@ -114,76 +116,76 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                     const SizedBox(height: 16),
                     const Spacer(),
-                    Container(
-                      height: 64,
-                      width: double.infinity,
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 0),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                        border: Border.all(
-                          color: Styles.botGray, // Set border color
-                          width: 1.0, // Set border width
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.account_circle,
-                            size: itemSize,
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: SizedBox(
-                              //height: 32,
-                              child: TextFormField(
-                                enabled: isThisEnabled,
-                                decoration: const InputDecoration(
-                                  hintText: 'Käyttäjänimi',
-                                  border: InputBorder.none,
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                    ), // Set your desired color
-                                  ),
-                                ),
-                                controller: _usernameEditingController,
-                                onChanged: (value) {
-                                  _usernameEditingController.text = value;
-                                },
-                                //initialValue: "plll",
-                                style: TextStyle(
-                                    fontSize: itemSize - 4,
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    fontWeight: FontWeight.w300),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            //height: 26,
-                            //width: 24,
-                            child: IconButton(
-                              alignment: Alignment.centerRight,
-                              iconSize: itemSize,
-                              onPressed: () {
-                                print('Tämä käyttäjänimi näkyy sinulle');
-                              },
-                              icon: Icon(
-                                Icons.info_outline_rounded,
-                                color: const Color.fromARGB(255, 0, 0, 0),
-                                size: itemSize - 2,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   height: 64,
+                    //   width: double.infinity,
+                    //   alignment: Alignment.centerLeft,
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 8, vertical: 0),
+                    //   decoration: BoxDecoration(
+                    //     color: const Color.fromARGB(255, 255, 255, 255),
+                    //     borderRadius: const BorderRadius.all(
+                    //       Radius.circular(5),
+                    //     ),
+                    //     border: Border.all(
+                    //       color: Styles.botGray, // Set border color
+                    //       width: 1.0, // Set border width
+                    //     ),
+                    //   ),
+                    //   child: Row(
+                    //     mainAxisSize: MainAxisSize.min,
+                    //     children: [
+                    //       Icon(
+                    //         Icons.account_circle,
+                    //         size: itemSize,
+                    //         color: const Color.fromARGB(255, 0, 0, 0),
+                    //       ),
+                    //       const SizedBox(width: 12),
+                    //       Expanded(
+                    //         child: SizedBox(
+                    //           //height: 32,
+                    //           child: TextFormField(
+                    //             enabled: isThisEnabled,
+                    //             decoration: const InputDecoration(
+                    //               hintText: 'Käyttäjänimi',
+                    //               border: InputBorder.none,
+                    //               focusedBorder: UnderlineInputBorder(
+                    //                 borderSide: BorderSide(
+                    //                   color: Color.fromARGB(255, 0, 0, 0),
+                    //                 ), // Set your desired color
+                    //               ),
+                    //             ),
+                    //             controller: _usernameEditingController,
+                    //             onChanged: (value) {
+                    //               _usernameEditingController.text = value;
+                    //             },
+                    //             //initialValue: "plll",
+                    //             style: TextStyle(
+                    //                 fontSize: itemSize - 4,
+                    //                 color: const Color.fromARGB(255, 0, 0, 0),
+                    //                 fontWeight: FontWeight.w300),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         //height: 26,
+                    //         //width: 24,
+                    //         child: IconButton(
+                    //           alignment: Alignment.centerRight,
+                    //           iconSize: itemSize,
+                    //           onPressed: () {
+                    //             print('Tämä käyttäjänimi näkyy sinulle');
+                    //           },
+                    //           icon: Icon(
+                    //             Icons.info_outline_rounded,
+                    //             color: const Color.fromARGB(255, 0, 0, 0),
+                    //             size: itemSize - 2,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     //const Spacer(),
                     const SizedBox(height: 32),
                     Container(
@@ -275,7 +277,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }),
                         ),
                         onPressed: () {
-                          _register(_usernameEditingController,
+                          _register(
                               _emailEditingController);
                           //_usernameEditingController.text = "";
                           //_emailEditingController.text = "";
@@ -286,19 +288,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           style: TextStyle(
                             fontSize: 18,
                           ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextButton(
-                      onPressed: () {
-                        print('Kirjaudu sisään');
-                      },
-                      child: Text(
-                        'Kirjaudu sisään',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          color: Styles.botGray,
                         ),
                       ),
                     ),
