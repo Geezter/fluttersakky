@@ -8,10 +8,14 @@ class TextInfo extends StatelessWidget {
       {required this.name,
       required this.message,
       required this.sender,
+      required this.date,
       super.key});
   final String name;
   final String sender;
   final String message;
+  final Timestamp date;
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class TextInfo extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const Padding(padding: EdgeInsets.only(left: 8)),
-                  const Timestamp(),
+                  date,
                   const Spacer(),
                   PopupMenuButton<MessageMenu>(
                     onSelected: (value) {
@@ -86,18 +90,18 @@ class TextInfo extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              // Container(
-              //   padding: const EdgeInsets.all(6),
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(30),
-              //     color: Color.fromARGB(255, 0, 0, 0),
-              //   ),
-              //   child: const Text(
-              //     'You',
-              //     style: TextStyle(
-              //         fontWeight: FontWeight.w500, color: Colors.white),
-              //   ),
-              // ),
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                ),
+                child: Text(
+                  name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500, color: Colors.white),
+                ),
+              ),
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(8),
@@ -123,9 +127,11 @@ class TextInfo extends StatelessWidget {
 }
 
 class TextInfoBot extends StatelessWidget {
-  const TextInfoBot({required this.message, super.key});
+  TextInfoBot({required this.message, required this.date, super.key});
 
   final String message;
+  final Timestamp date;
+
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +168,7 @@ class TextInfoBot extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   const Padding(padding: EdgeInsets.only(left: 8)),
-                  Timestamp(),
+                  date,
                   const Spacer(),
                   PopupMenuButton<MessageMenu>(
                     onSelected: (value) {
@@ -206,19 +212,19 @@ class TextInfoBot extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              // Container(
-              //   padding: const EdgeInsets.all(6),
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(30),
-              //     color: Color.fromARGB(255, 0, 0, 0),
-              //   ),
-              //   child: const Text(
-              //     'Botti',
-              //     style: TextStyle(
-              //         fontWeight: FontWeight.w500,
-              //         color: Color.fromARGB(255, 225, 225, 225)),
-              //   ),
-              // ),
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+                child: const Text(
+                  'Botti',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color.fromARGB(255, 225, 225, 225)),
+                ),
+              ),
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(8),

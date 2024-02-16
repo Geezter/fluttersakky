@@ -63,6 +63,29 @@ Future<String> handshake(String token) async {
   }
 }
 
+Future<String> getMessages(String token) async {
+  try {
+    var response = await http.post(
+      Uri.parse('http://localhost:3000/api/getmessages'),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: convert.jsonEncode({'token': token}),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = response.body;
+      print('got messages back');
+      //print(jsonResponse);
+      return jsonResponse;
+    }
+    print('failed on getMessages');
+    return 'failed';
+  } catch (error) {
+    return ('Error: $error');
+  }
+}
+
 Future<String> login(String email) async {
   try {
     // Use the await keyword to make the HTTP POST request asynchronously.

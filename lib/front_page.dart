@@ -12,18 +12,16 @@ class FrontPage extends StatefulWidget {
 }
 
 class _FrontPageState extends State<FrontPage> {
+  
   late Map<String, dynamic> handshakeResult;
 
   Future<void> _performHandshake() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     //await prefs.setString('token', '');
     final String? token = prefs.getString('token');
-    print(token);
     if (token != null && token != 'token') {
       var verified = await handshake(token);
-      print(verified.runtimeType);
       handshakeResult = convert.jsonDecode(verified);
-      print(handshakeResult['message']);
       goAhead(handshakeResult);
     }
   }
@@ -32,10 +30,8 @@ class _FrontPageState extends State<FrontPage> {
     if (handshakeResult['message'] == 'register') {
       Navigator.pushNamed(context, '/registrationPage');
     }
-    print(handshakeResult);
 
     if (handshakeResult['message'] == "verify") {
-      print('isnt this on');
       Navigator.pushNamed(context, '/verificationPage',
           arguments: handshakeResult['email']);
     }
