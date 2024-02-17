@@ -17,10 +17,11 @@ class _APIState extends State<API> {
     return Container();
   }
 }
-
+/// Sends promp to backend to send to ChatGPT. Gives token also.
+/// Returns the answer.
+/// 
 Future<String> askChatAPI(String? token, String prompt) async {
   try {
-    // Use the await keyword to make the HTTP POST request asynchronously.
     var response = await http.post(
       Uri.parse('http://localhost:3000/api/chatgpt'),
       headers: {
@@ -40,6 +41,9 @@ Future<String> askChatAPI(String? token, String prompt) async {
   }
 }
 
+/// 'Handshakes' the backend by giving token. Returns answer based on the
+/// phase of login for the user
+/// 
 Future<String> handshake(String token) async {
   try {
     var response = await http.post(
@@ -57,12 +61,14 @@ Future<String> handshake(String token) async {
     }
     print('failed on handshake');
     return 'failed';
-    //('Request failed with status: ${response.statusCode}.');
   } catch (error) {
     return ('Error: $error');
   }
 }
 
+/// Sends token to backend and gives in return all
+/// message infos in database for the user
+/// 
 Future<String> getMessages(String token) async {
   try {
     var response = await http.post(
@@ -75,8 +81,6 @@ Future<String> getMessages(String token) async {
 
     if (response.statusCode == 200) {
       var jsonResponse = response.body;
-      print('got messages back');
-      //print(jsonResponse);
       return jsonResponse;
     }
     print('failed on getMessages');
@@ -86,6 +90,9 @@ Future<String> getMessages(String token) async {
   }
 }
 
+/// Performs login attempt with given email
+/// Forwards to verifying email
+/// 
 Future<String> login(String email) async {
   try {
     // Use the await keyword to make the HTTP POST request asynchronously.
@@ -107,11 +114,10 @@ Future<String> login(String email) async {
   }
 }
 
+/// Attempt to verify with the code which was sent to users email
+/// 
 Future<String> verifyThis(String verificationEmail, String code) async {
   try {
-    print(code);
-    print('here in the api ${verificationEmail}');
-    // Use the await keyword to make the HTTP POST request asynchronously.
     var response = await http.post(
       Uri.parse('http://localhost:3000/api/verify'),
       headers: {
@@ -119,10 +125,8 @@ Future<String> verifyThis(String verificationEmail, String code) async {
       },
       body: convert.jsonEncode({'email': verificationEmail, 'code': code}),
     );
-    print(response.statusCode);
     if (response.statusCode == 200) {
       var jsonResponse = await convert.jsonDecode(response.body);
-      print("body: ${response.body}");
       return jsonResponse['message'];
     } else {
       return ('Request failed with status: ${response.statusCode}.');

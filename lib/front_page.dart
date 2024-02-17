@@ -16,12 +16,10 @@ class _FrontPageState extends State<FrontPage> {
   late Map<String, dynamic> handshakeResult;
 
   
-  /**
-   * performs handshake with the backend, sends JWT token from
-   * shared preferences if there is one.
-   * Retunrs value based on the registration status of the user
-   */
-  ///
+  /// performs handshake with the backend, sends JWT token from
+  /// shared preferences if there is one.
+  /// Retunrs value based on the registration status of the user
+  /// 
   Future<void> _performHandshake() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     //await prefs.setString('token', '');
@@ -33,10 +31,8 @@ class _FrontPageState extends State<FrontPage> {
     }
   }
 
-  /**
-   * Takes the user forward depending on the handshake result
-   */
-  ///
+  /// Takes the user forward depending on the handshake result
+  /// 
   void goAhead(handshakeResult) {
     if (handshakeResult['message'] == 'register') {
       Navigator.pushNamed(context, '/registrationPage');
