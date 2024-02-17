@@ -12,9 +12,16 @@ class FrontPage extends StatefulWidget {
 }
 
 class _FrontPageState extends State<FrontPage> {
-  
+
   late Map<String, dynamic> handshakeResult;
 
+  
+  /**
+   * performs handshake with the backend, sends JWT token from
+   * shared preferences if there is one.
+   * Retunrs value based on the registration status of the user
+   */
+  ///
   Future<void> _performHandshake() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     //await prefs.setString('token', '');
@@ -26,6 +33,10 @@ class _FrontPageState extends State<FrontPage> {
     }
   }
 
+  /**
+   * Takes the user forward depending on the handshake result
+   */
+  ///
   void goAhead(handshakeResult) {
     if (handshakeResult['message'] == 'register') {
       Navigator.pushNamed(context, '/registrationPage');
@@ -40,13 +51,13 @@ class _FrontPageState extends State<FrontPage> {
     }
   }
 
+  // Activates handshake when site is loaded
   @override
   void initState() {
     super.initState();
     _performHandshake();
   }
 
-  //initState();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
