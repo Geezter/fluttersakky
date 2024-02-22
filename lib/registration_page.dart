@@ -4,7 +4,7 @@ import 'package:kouluharjoittelu/config/api.dart';
 import 'package:kouluharjoittelu/style/buttons.dart';
 import 'package:kouluharjoittelu/style/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:kouluharjoittelu/style/styles.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -22,9 +22,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final double itemSize = 24;
   @override
   Widget build(BuildContext context) {
-
-    Future<String> transferKnowledge(
-      _emailEditingController) async {
+    Future<String> transferKnowledge(_emailEditingController) async {
       final String email = _emailEditingController.text;
       String registered = await login(email);
       return registered;
@@ -41,8 +39,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         isThisEnabled = false;
       });
 
-      String registeringResponse = await transferKnowledge(
-        _emailEditingController);
+      String registeringResponse =
+          await transferKnowledge(_emailEditingController);
       if (registeringResponse.isNotEmpty) {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', registeringResponse);
@@ -67,14 +65,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
             child: Container(
               height: screenHeight,
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomRight,
                   end: Alignment.topLeft,
                   colors: [
-                    Color.fromARGB(255, 193, 193, 193),
-                    Color.fromARGB(255, 230, 232, 250)
-                  ],
+                    Styles.backgroundGray,
+                    Styles.backgroundGray],
                 ),
               ),
               //transform: Matrix4.identity()..scale(1.5),
@@ -277,8 +274,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }),
                         ),
                         onPressed: () {
-                          _register(
-                              _emailEditingController);
+                          _register(_emailEditingController);
                           //_usernameEditingController.text = "";
                           //_emailEditingController.text = "";
                         },

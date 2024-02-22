@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kouluharjoittelu/style/styles.dart';
 
 enum MessageMenu { editProfile, botSettings, about }
 
@@ -12,7 +13,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   AppBar build(BuildContext context) {
     return AppBar(
-      backgroundColor: Color.fromARGB(255, 0, 1, 21),
+      backgroundColor: Styles.appBarDarkGray,
       title: Stack(
         children: <Widget>[
           Container(

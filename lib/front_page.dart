@@ -22,7 +22,7 @@ class _FrontPageState extends State<FrontPage> {
   /// 
   Future<void> _performHandshake() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    //await prefs.setString('token', '');
+    // await prefs.setString('token', '');
     final String? token = prefs.getString('token');
     if (token != null && token != 'token') {
       var verified = await handshake(token);
@@ -82,11 +82,11 @@ class _FrontPageState extends State<FrontPage> {
                   color: Color.fromARGB(255, 255, 255, 255),
                 ),
                 child: Text(
-                  'Chatbot 2029',
+                  'AChatI+',
                   style: TextStyle(
-                    backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+                    //backgroundColor: Styles.backgroundGray,
                     fontWeight: FontWeight.bold,
-                    fontSize: 32,
+                    fontSize: 42,
                     color: Styles.botGray,
                     decoration: TextDecoration.none,
                   ),

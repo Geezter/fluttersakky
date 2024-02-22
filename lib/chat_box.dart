@@ -7,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
 import 'package:kouluharjoittelu/components/timestamp.dart';
 import 'package:auto_scroll/auto_scroll.dart';
+import 'package:kouluharjoittelu/style/styles.dart';
+
+enum NewChatMenu { newChat, email }
 
 class ChatBox extends StatefulWidget {
   const ChatBox({super.key});
@@ -17,7 +20,7 @@ class ChatBox extends StatefulWidget {
 
 class _ChatBoxState extends State<ChatBox> {
   final TextEditingController _textEditingController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  final AutoScrollController _autoScrollController = AutoScrollController();
   final FocusNode _focusNode = FocusNode();
   final List _msgs = [];
   late Map<String, dynamic> messagesResult;
@@ -29,58 +32,45 @@ class _ChatBoxState extends State<ChatBox> {
     return gptAnswer;
   }
 
-  _scrollToEnd() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
-  }
-
-  void _addmessage(name, message, sender) async {
+  void _addMessage(name, message, sender) async {
     if (message != "") {
       setState(() {
         _msgs.add(
           TextInfo(
-              name: name,
-              message: message,
-              sender: sender,
-              date: Timestamp()),
+              name: name, message: message, sender: sender, date: Timestamp()),
         );
         _textEditingController.text = "";
       });
-      _scrollToEnd();
     }
     if (message != "") {
       String answer = await transferKnowledge(message);
       setState(() {
         _msgs.add(
-          TextInfoBot(
-            message: answer,
-            date: Timestamp()),
+          TextInfoBot(message: answer, date: Timestamp()),
         );
       });
     }
+    _autoScrollController.animateToAnchor;
     _focusNode.requestFocus();
   }
 
   Future<void> _initMessages() async {
-    print('in initmessages');
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     //await prefs.setString('token', '');
     final String? token = prefs.getString('token');
     if (token != null && token != 'token') {
       var result = await getMessages(token);
       messagesResult = convert.jsonDecode(result);
-      //print(messagesResult);
-      for (dynamic message in messagesResult['rows']) {
-        print(message['message_id']);
+      if (!messagesResult['rows'].isEmpty) {
+        for (dynamic message in messagesResult['rows']) {
+          print(message['message_id']);
 
-        //print(message[1]);
-        updateUserMsgs(message['email'], message['message'], 'user',
-            message['message_created_at']);
+          updateUserMsgs(message['email'], message['message'], 'user',
+              message['message_created_at']);
 
-        updateBotMsgs(message['response'], message['response_created_at']);
+          updateBotMsgs(message['response'], message['response_created_at']);
+          _autoScrollController.animateToAnchor;
+        }
       }
 
       //goAhead(handshakeResult);
@@ -106,6 +96,7 @@ class _ChatBoxState extends State<ChatBox> {
         ),
       );
     });
+    _autoScrollController.animateToAnchor;
   }
 
   void updateUserMsgs(name, message, sender, date) async {
@@ -115,6 +106,7 @@ class _ChatBoxState extends State<ChatBox> {
         TextInfo(name: name, message: message, sender: sender, date: stamp),
       );
     });
+    _autoScrollController.animateToAnchor;
   }
 
   @override
@@ -126,91 +118,177 @@ class _ChatBoxState extends State<ChatBox> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(s: 'Botti'),
-      body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints viewportConstraints) {
-        return SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          controller: _scrollController,
-          scrollDirection: Axis.vertical,
-          child: ConstrainedBox(
-            constraints:
-                BoxConstraints(minHeight: viewportConstraints.maxHeight),
-            child: Container(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 20, bottom: 60),
-              decoration: const BoxDecoration(
-                gradient: RadialGradient(
-                  tileMode: TileMode.mirror,
-                  colors: [
-                    Color.fromARGB(255, 230, 232, 250),
-                    Color.fromARGB(255, 230, 232, 250)
-                  ],
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      resizeToAvoidBottomInset: false,
+      appBar: MyAppBar(s: 'My Chatbot'),
+      bottomNavigationBar: SafeArea(
+        bottom: false,
+        child: Container(
+          decoration: BoxDecoration(color: Styles.appBarDarkGray),
+          height: 75,
+          child: Column(
+            children: [
+              const SizedBox(height: 3),
+              Row(
                 children: [
-                  Column(
-                    children: [
-                      ..._msgs,
-                    ],
+                  GestureDetector(
+                    onLongPress: () {},
+                    child: PopupMenuButton<NewChatMenu>(
+                      onSelected: (value) {
+                        switch (value) {
+                          case NewChatMenu.newChat:
+                            print('clear the chat');
+                            break;
+                          case NewChatMenu.email:
+                            print('email the stuff');
+                            break;
+                          default:
+                        }
+                      },
+                      icon: Icon(Icons.new_label,
+                      color: Styles.backgroundGray,
+                      ),
+                      itemBuilder: (context) {
+                        return [
+                          const PopupMenuItem(
+                            value: NewChatMenu.newChat,
+                            child: Text('New chat'),
+                          ),
+                          const PopupMenuItem(
+                            value: NewChatMenu.email,
+                            child: Text('Email to me'),
+                          ),
+                        ];
+                      },
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ), // Set your desired color
-                            ),
-                            hintText: 'Mikä askarruttaa?',
-                            hintStyle: TextStyle(
-                                color: Color.fromARGB(255, 70, 70, 70)),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Styles.backgroundGray,
                           ),
-                          controller: _textEditingController,
-                          focusNode: _focusNode,
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          onChanged: (value) {
-                            _textEditingController.text = value;
+                        ),
+                        hintText: 'Mikä askarruttaa?',
+                        hintStyle: TextStyle(
+                          color: Styles.backgroundGray,
+                        ),
+                      ),
+                      controller: _textEditingController,
+                      focusNode: _focusNode,
+                      style: TextStyle(
+                        color: Styles.backgroundGray,
+                      ),
+                      onChanged: (value) {
+                        _textEditingController.text = value;
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.resolveWith(
+                          (states) {
+                            return Colors.white;
+                          },
+                        ),
+                        backgroundColor: MaterialStateProperty.resolveWith(
+                          (states) {
+                            return myButtonBackgroundColor;
                           },
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.resolveWith((states) {
-                              return Colors.white;
-                            }),
-                            backgroundColor:
-                                MaterialStateProperty.resolveWith((states) {
-                              return myButtonBackgroundColor;
-                            }),
-                          ),
-                          onPressed: () {
-                            _addmessage(
-                                "Jarkko", _textEditingController.text, 'user');
-                            _textEditingController.clear();
-                          },
-                          child: const Text(
-                            'Kysy',
-                          ),
-                        ),
-                      ),
-                    ],
+                      onPressed: () {
+                        _addMessage(
+                          "Jarkko",
+                          _textEditingController.text,
+                          'user',
+                        );
+                        _textEditingController.clear();
+                      },
+                      child: const Text('Kysy'),
+                    ),
                   ),
                 ],
               ),
-            ),
+              const SizedBox(height: 15),
+            ],
           ),
-        );
-      }),
+        ),
+      ),
+      body: AutoScroller(
+        controller: _autoScrollController,
+        lengthIdentifier: _msgs.length * 100,
+        anchorThreshold: 50,
+        startAnchored: false,
+        builder: (context, autoScrollController) {
+          if (_msgs.isEmpty) {
+            return Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(500),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/chatBox');
+                  },
+                  child: Opacity(
+                    opacity: 0.3,
+                    child: Image.asset(
+                      'assets/images/logo3.png',
+                      width: 300,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    controller: autoScrollController,
+                    scrollDirection: Axis.vertical,
+                    itemCount: 1,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                          top: 20,
+                          bottom: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            tileMode: TileMode.mirror,
+                            colors: [
+                              Styles.backgroundGray,
+                              Styles.backgroundGray,
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                ..._msgs,
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                //const SizedBox(height: 15),
+              ],
+            );
+          }
+        },
+      ),
     );
   }
 }

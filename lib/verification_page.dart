@@ -3,6 +3,7 @@ import 'package:kouluharjoittelu/components/my_appBar.dart';
 import 'package:kouluharjoittelu/style/buttons.dart';
 import 'package:kouluharjoittelu/config/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kouluharjoittelu/style/styles.dart';
 
 class VerificationPage extends StatefulWidget {
   final String? verificationEmail;
@@ -44,7 +45,7 @@ class _ConfirmationPageState extends State<VerificationPage> {
       print('menossa apiin');
       print(verificationController.text);
       String? verificationResponse =
-        await transferKnowledge(verificationController);
+          await transferKnowledge(verificationController);
       print("response: ${verificationResponse}");
       if (verificationResponse != 'failed') {
         final String token = verificationResponse;
@@ -67,13 +68,13 @@ class _ConfirmationPageState extends State<VerificationPage> {
             child: Container(
               height: screenHeight,
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomRight,
                   end: Alignment.topLeft,
                   colors: [
-                    Color.fromARGB(255, 193, 193, 193),
-                    Color.fromARGB(255, 230, 232, 250)
+                    Styles.backgroundGray,
+                    Styles.backgroundGray
                   ],
                 ),
               ),
