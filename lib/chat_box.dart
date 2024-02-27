@@ -24,34 +24,58 @@ class _ChatBoxState extends State<ChatBox> {
   final FocusNode _focusNode = FocusNode();
   final List _msgs = [];
   late Map<String, dynamic> messagesResult;
+  late int amount = 0;
+  late String userEmail;
 
   Future<String> transferKnowledge(message) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     String gptAnswer = await askChatAPI(token, message);
+    if (gptAnswer == 'deleted') {
+      return 'false';
+    }
     return gptAnswer;
   }
 
   void _addMessage(name, message, sender) async {
     if (message != "") {
+      int i = 0;
       setState(() {
+        if (message == '/clear') {
+          _msgs.clear();
+          return;
+        }
         _msgs.add(
           TextInfo(
-              name: name, message: message, sender: sender, date: Timestamp()),
+            name: name,
+            message: message,
+            sender: sender,
+            date: Timestamp(),
+            amount: i,
+            total: amount,
+          ),
         );
         _textEditingController.text = "";
+        i++;
       });
     }
     if (message != "") {
       String answer = await transferKnowledge(message);
       setState(() {
-        _msgs.add(
-          TextInfoBot(message: answer, date: Timestamp()),
-        );
+        if (answer != 'false') {
+          _msgs.add(
+            TextInfoBot(message: answer, date: Timestamp()),
+          );
+        }
       });
     }
-    _autoScrollController.animateToAnchor;
-    _focusNode.requestFocus();
+    if (_msgs.isNotEmpty) {
+      _autoScrollController.animateToAnchor(
+        duration: const Duration(milliseconds: 4000),
+        curve: Curves.easeOut,
+      );
+      _focusNode.requestFocus();
+    }
   }
 
   Future<void> _initMessages() async {
@@ -62,18 +86,15 @@ class _ChatBoxState extends State<ChatBox> {
       var result = await getMessages(token);
       messagesResult = convert.jsonDecode(result);
       if (!messagesResult['rows'].isEmpty) {
+        amount = messagesResult['rows'].length;
         for (dynamic message in messagesResult['rows']) {
-          print(message['message_id']);
-
+          userEmail = message['email'];
           updateUserMsgs(message['email'], message['message'], 'user',
               message['message_created_at']);
 
           updateBotMsgs(message['response'], message['response_created_at']);
-          _autoScrollController.animateToAnchor;
         }
       }
-
-      //goAhead(handshakeResult);
     }
   }
 
@@ -96,23 +117,39 @@ class _ChatBoxState extends State<ChatBox> {
         ),
       );
     });
-    _autoScrollController.animateToAnchor;
   }
 
   void updateUserMsgs(name, message, sender, date) async {
     Timestamp stamp = _timestampTemppu(date);
+    int i = 0;
     setState(() {
       _msgs.add(
-        TextInfo(name: name, message: message, sender: sender, date: stamp),
+        TextInfo(
+            name: name,
+            message: message,
+            sender: sender,
+            date: stamp,
+            amount: amount,
+            total: i),
       );
     });
-    _autoScrollController.animateToAnchor;
+    i++;
   }
 
   @override
   void initState() {
     super.initState();
-    _initMessages();
+    _initMessages().then((_) {
+      if (_msgs.isNotEmpty) {
+        // Delay the scrolling to ensure the list is built
+        Future.delayed(const Duration(milliseconds: 100), () {
+          _autoScrollController.animateToAnchor(
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.linear,
+          );
+        });
+      }
+    });
   }
 
   @override
@@ -124,95 +161,110 @@ class _ChatBoxState extends State<ChatBox> {
         bottom: false,
         child: Container(
           decoration: BoxDecoration(color: Styles.appBarDarkGray),
-          height: 75,
+          height: 70 + MediaQuery.of(context).viewInsets.bottom,
           child: Column(
             children: [
               const SizedBox(height: 3),
-              Row(
-                children: [
-                  GestureDetector(
-                    onLongPress: () {},
-                    child: PopupMenuButton<NewChatMenu>(
-                      onSelected: (value) {
-                        switch (value) {
-                          case NewChatMenu.newChat:
-                            print('clear the chat');
-                            break;
-                          case NewChatMenu.email:
-                            print('email the stuff');
-                            break;
-                          default:
-                        }
-                      },
-                      icon: Icon(Icons.new_label,
-                      color: Styles.backgroundGray,
+              Padding(
+                padding: EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onLongPress: () {},
+                      child: PopupMenuButton<NewChatMenu>(
+                        onSelected: (value) {
+                          switch (value) {
+                            case NewChatMenu.newChat:
+                              _addMessage(
+                                userEmail,
+                                "/clear",
+                                'user',
+                              );
+                              break;
+                            case NewChatMenu.email:
+                              break;
+                            default:
+                          }
+                        },
+                        icon: Icon(
+                          Icons.new_label,
+                          color: Styles.backgroundGray,
+                        ),
+                        itemBuilder: (context) {
+                          return [
+                            const PopupMenuItem(
+                              value: NewChatMenu.newChat,
+                              child: Text('New chat'),
+                            ),
+                            const PopupMenuItem(
+                              value: NewChatMenu.email,
+                              child: Text('Email to me'),
+                            ),
+                          ];
+                        },
                       ),
-                      itemBuilder: (context) {
-                        return [
-                          const PopupMenuItem(
-                            value: NewChatMenu.newChat,
-                            child: Text('New chat'),
-                          ),
-                          const PopupMenuItem(
-                            value: NewChatMenu.email,
-                            child: Text('Email to me'),
-                          ),
-                        ];
-                      },
                     ),
-                  ),
-                  const SizedBox(width: 5),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Styles.backgroundGray,
+                            ),
+                          ),
+                          hintText: 'Mikä askarruttaa?',
+                          hintStyle: TextStyle(
                             color: Styles.backgroundGray,
                           ),
                         ),
-                        hintText: 'Mikä askarruttaa?',
-                        hintStyle: TextStyle(
+                        controller: _textEditingController,
+                        focusNode: _focusNode,
+                        style: TextStyle(
                           color: Styles.backgroundGray,
                         ),
+                        onChanged: (value) {
+                          _textEditingController.text = value;
+                        },
                       ),
-                      controller: _textEditingController,
-                      focusNode: _focusNode,
-                      style: TextStyle(
-                        color: Styles.backgroundGray,
-                      ),
-                      onChanged: (value) {
-                        _textEditingController.text = value;
-                      },
                     ),
-                  ),
-                  const SizedBox(width: 5),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.resolveWith(
-                          (states) {
-                            return Colors.white;
-                          },
+                    const SizedBox(width: 5),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.resolveWith(
+                            (states) {
+                              return Colors.white;
+                            },
+                          ),
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                            (states) {
+                              return myLightButtonBackgroundColor;
+                            },
+                          ),
                         ),
-                        backgroundColor: MaterialStateProperty.resolveWith(
-                          (states) {
-                            return myButtonBackgroundColor;
-                          },
+                        onPressed: () {
+                          _addMessage(
+                            userEmail,
+                            _textEditingController.text,
+                            'user',
+                          );
+                          _textEditingController.clear();
+                        },
+                        child: Text(
+                          'Kysy',
+                          style: TextStyle(
+                            color: Styles.appBarDarkGray,
+                          ),
                         ),
                       ),
-                      onPressed: () {
-                        _addMessage(
-                          "Jarkko",
-                          _textEditingController.text,
-                          'user',
-                        );
-                        _textEditingController.clear();
-                      },
-                      child: const Text('Kysy'),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 15),
             ],
@@ -237,7 +289,7 @@ class _ChatBoxState extends State<ChatBox> {
                     opacity: 0.3,
                     child: Image.asset(
                       'assets/images/logo3.png',
-                      width: 300,
+                      width: 400,
                     ),
                   ),
                 ),
@@ -265,7 +317,7 @@ class _ChatBoxState extends State<ChatBox> {
                             tileMode: TileMode.mirror,
                             colors: [
                               Styles.backgroundGray,
-                              Styles.backgroundGray,
+                              Styles.paintersWhite,
                             ],
                           ),
                         ),

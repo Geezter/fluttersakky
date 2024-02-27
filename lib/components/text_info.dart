@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kouluharjoittelu/components/timestamp.dart';
+import 'package:kouluharjoittelu/style/styles.dart';
 
 enum MessageMenu { edit, delete }
 
@@ -9,13 +10,15 @@ class TextInfo extends StatelessWidget {
       required this.message,
       required this.sender,
       required this.date,
+      required this.amount,
+      required this.total,
       super.key});
   final String name;
   final String sender;
   final String message;
   final Timestamp date;
-
-  
+  final int amount;
+  final int total;
 
   @override
   Widget build(BuildContext context) {
@@ -31,46 +34,32 @@ class TextInfo extends StatelessWidget {
             minWidth: 200.0,
             maxWidth: double.infinity - 20,
           ),
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(tileMode: TileMode.mirror, colors: [
+          decoration: BoxDecoration(
+            border: Border.all(
+                    color: const Color.fromARGB(
+                        255, 187, 187, 187), // Set border color
+                    width: 1.0, // Set border width
+                  ),
+              gradient: const LinearGradient(tileMode: TileMode.mirror, colors: [
                 Color.fromARGB(184, 255, 255, 255),
                 Color.fromARGB(255, 255, 255, 255),
               ]),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20))),
           child: Column(
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const Padding(padding: EdgeInsets.only(left: 8)),
-                  date,
-                  const Spacer(),
-                  PopupMenuButton<MessageMenu>(
-                    onSelected: (value) {
-                      switch (value) {
-                        case MessageMenu.edit:
-                          Navigator.pushNamed(context, '/profilePage');
-                        case MessageMenu.delete:
-                          print('delete');
-                          break;
-                        default:
-                      }
-                    },
-                    icon: const Icon(Icons.edit, size: 15),
-                    itemBuilder: (context) {
-                      return [
-                        const PopupMenuItem(
-                            value: MessageMenu.edit,
-                            child: Text('Edit Profile')),
-                        const PopupMenuItem(
-                            value: MessageMenu.delete, child: Text('Delete')),
-                      ];
-                    },
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Padding(padding: EdgeInsets.only(left: 8)),
+                    date,
+                    const Spacer(),
+                  ],
+                ),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -91,15 +80,20 @@ class TextInfo extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Container(
-                padding: const EdgeInsets.all(6),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: const Color.fromARGB(255, 0, 0, 0),
+                  border: Border.all(
+                    color: const Color.fromARGB(
+                        255, 187, 187, 187), // Set border color
+                    width: 1.0, // Set border width
+                  ),
+                  color: Color.fromARGB(255, 218, 218, 218)
                 ),
                 child: Text(
                   name,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500, color: Colors.white),
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500, color: Styles.appBarDarkGray),
                 ),
               ),
               const SizedBox(height: 12),
@@ -132,7 +126,6 @@ class TextInfoBot extends StatelessWidget {
   final String message;
   final Timestamp date;
 
-
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -147,8 +140,13 @@ class TextInfoBot extends StatelessWidget {
             minWidth: 200.0,
             maxWidth: double.infinity - 20,
           ),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
+          decoration: BoxDecoration(
+            border: Border.all(
+                    color: const Color.fromARGB(
+                        255, 187, 187, 187), // Set border color
+                    width: 1.0, // Set border width
+                  ),
+            gradient: const LinearGradient(
               colors: [
                 Color.fromARGB(255, 255, 255, 255),
                 Color.fromARGB(255, 224, 224, 224),
@@ -156,7 +154,7 @@ class TextInfoBot extends StatelessWidget {
               end: Alignment.centerLeft,
               begin: Alignment.centerRight,
             ),
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(20),
               bottomLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -164,35 +162,16 @@ class TextInfoBot extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  const Padding(padding: EdgeInsets.only(left: 8)),
-                  date,
-                  const Spacer(),
-                  PopupMenuButton<MessageMenu>(
-                    onSelected: (value) {
-                      switch (value) {
-                        case MessageMenu.edit:
-                          print('edit da shit');
-                          return;
-                        case MessageMenu.delete:
-                          print('log out');
-                          break;
-                        default:
-                      }
-                    },
-                    icon: const Icon(Icons.menu_open_sharp, size: 15),
-                    itemBuilder: (context) {
-                      return [
-                        const PopupMenuItem(
-                            value: MessageMenu.edit, child: Text('Edit')),
-                        const PopupMenuItem(
-                            value: MessageMenu.delete, child: Text('Delete')),
-                      ];
-                    },
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Padding(padding: EdgeInsets.only(left: 8)),
+                    date,
+                    const Spacer(),
+                  ],
+                ),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -213,16 +192,20 @@ class TextInfoBot extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Container(
-                padding: const EdgeInsets.all(6),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  border: Border.all(
+                    color: const Color.fromARGB(
+                        255, 187, 187, 187), // Set border color
+                    width: 2.0, // Set border width
+                  ),
+                  color: Color.fromARGB(255, 218, 218, 218)
                 ),
-                child: const Text(
-                  'Botti',
+                child: Text(
+                  'AbotI',
                   style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 225, 225, 225)),
+                      fontWeight: FontWeight.w500, color: Styles.appBarDarkGray),
                 ),
               ),
               const SizedBox(height: 12),

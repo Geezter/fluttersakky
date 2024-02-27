@@ -4,6 +4,7 @@ class Styles {
   static Color botGray = const Color.fromARGB(255, 187, 187, 187);
   static Color backgroundGray = Color.fromARGB(255, 240, 240, 240);
   static Color appBarDarkGray = Color.fromARGB(255, 51, 51, 51);
+  static Color paintersWhite = Color.fromARGB(239, 255, 255, 255);
 
   static const boxPageStyle = TextStyle(
       fontSize: 24,

@@ -13,6 +13,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   AppBar build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Styles.appBarDarkGray,
       title: Stack(
         children: <Widget>[
@@ -26,7 +27,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               Text(
                 s,
                 style: const TextStyle(
-                  fontSize: 22.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.w300,
                   color: Color.fromARGB(239, 255, 255, 255),
                 ),
@@ -39,14 +40,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                       case MessageMenu.editProfile:
                         Navigator.pushNamed(context, '/profilePage');
                       case MessageMenu.botSettings:
-                        print('settings');
-                        break;
                       case MessageMenu.about:
-                        Navigator.pushNamed(context, '/registrationPage');
+                        Navigator.pushNamed((context), '/aboutPage');
                       default:
                     }
                   },
-                  icon: const Icon(Icons.more_vert, size: 15),
+                  icon: Icon(
+                    Icons.more_vert_rounded,
+                    size: 25,
+                    color: Styles.backgroundGray,
+                  ),
                   itemBuilder: (context) {
                     return [
                       const PopupMenuItem(

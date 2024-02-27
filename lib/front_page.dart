@@ -24,11 +24,13 @@ class _FrontPageState extends State<FrontPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // await prefs.setString('token', '');
     final String? token = prefs.getString('token');
-    if (token != null && token != 'token') {
-      var verified = await handshake(token);
-      handshakeResult = convert.jsonDecode(verified);
-      goAhead(handshakeResult);
-    }
+    Future.delayed(const Duration(milliseconds: 2000), () async {
+      if (token != null && token != 'token') {
+        var verified = await handshake(token);
+        handshakeResult = convert.jsonDecode(verified);
+        goAhead(handshakeResult);
+      }
+    });
   }
 
   /// Takes the user forward depending on the handshake result

@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:kouluharjoittelu/style/styles.dart";
 
 class MyMaterialStateColor extends MaterialStateColor {
   MyMaterialStateColor(int defaultValue) : super(defaultValue);
@@ -13,5 +14,9 @@ class MyMaterialStateColor extends MaterialStateColor {
 }
 
 MyMaterialStateColor myButtonBackgroundColor = MyMaterialStateColor(
-  Color.fromARGB(255, 51, 51, 51).value,
+  Styles.appBarDarkGray.value,
+);
+
+MyMaterialStateColor myLightButtonBackgroundColor = MyMaterialStateColor(
+  Styles.backgroundGray.value,
 );

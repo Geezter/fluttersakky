@@ -33,7 +33,7 @@ class Timestamp extends StatelessWidget {
         return Text(
           snapshot.data ?? "",
           style: const TextStyle(
-            fontSize: 12,
+            fontSize: 14,
             color: Color.fromARGB(255, 70, 70, 70),
             fontWeight: FontWeight.w300,
           ),
