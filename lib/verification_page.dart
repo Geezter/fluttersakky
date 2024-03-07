@@ -17,14 +17,13 @@ class VerificationPage extends StatefulWidget {
 class _ConfirmationPageState extends State<VerificationPage> {
   final TextEditingController _verificationEditingController =
       TextEditingController();
-  late Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   final double itemSize = 24;
   @override
   Widget build(BuildContext context) {
     final dynamic arguments = ModalRoute.of(context)!.settings.arguments;
     final String verificationEmail = arguments;
-    print('verification with modal ${verificationEmail}');
 
     Future<String> transferKnowledge(verificationController) async {
       print("e-mail: ${verificationEmail}");

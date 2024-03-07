@@ -12,14 +12,13 @@ class FrontPage extends StatefulWidget {
 }
 
 class _FrontPageState extends State<FrontPage> {
-
   late Map<String, dynamic> handshakeResult;
+  late String email;
 
-  
   /// performs handshake with the backend, sends JWT token from
   /// shared preferences if there is one.
-  /// Retunrs value based on the registration status of the user
-  /// 
+  /// Returns value based on the registration status of the user
+  ///
   Future<void> _performHandshake() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // await prefs.setString('token', '');
@@ -27,14 +26,16 @@ class _FrontPageState extends State<FrontPage> {
     Future.delayed(const Duration(milliseconds: 2000), () async {
       if (token != null && token != 'token') {
         var verified = await handshake(token);
+
         handshakeResult = convert.jsonDecode(verified);
+        email = handshakeResult['email'];
         goAhead(handshakeResult);
       }
     });
   }
 
   /// Takes the user forward depending on the handshake result
-  /// 
+  ///
   void goAhead(handshakeResult) {
     if (handshakeResult['message'] == 'register') {
       Navigator.pushNamed(context, '/registrationPage');
@@ -45,7 +46,8 @@ class _FrontPageState extends State<FrontPage> {
           arguments: handshakeResult['email']);
     }
     if (handshakeResult['message'] == 'ok') {
-      Navigator.pushNamed(context, '/chatBox');
+      Navigator.pushNamed(context, '/chatBox',
+          arguments: handshakeResult['email']);
     }
   }
 
@@ -59,92 +61,57 @@ class _FrontPageState extends State<FrontPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: RadialGradient(
-            radius: BorderSide.strokeAlignOutside,
-            colors: [
-              Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 255, 255, 255)
-            ],
-          ),
-        ),
-        //height: double.infinity,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  color: Color.fromARGB(255, 255, 255, 255),
-                ),
-                child: Text(
-                  'AChatI+',
-                  style: TextStyle(
-                    //backgroundColor: Styles.backgroundGray,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 42,
-                    color: Styles.botGray,
-                    decoration: TextDecoration.none,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 64),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(500),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/chatBox');
-                  },
-                  child: Image.asset(
-                    'assets/images/logo3.png',
-                    width: 300,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 64),
-              SizedBox(
-                height: 100,
-                child: Column(
-                  children: [
-                    const Spacer(),
-                    Container(
-                      height: 100,
-                      width: 350,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 10),
-                      child: Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                              onPressed: (() {
-                                Navigator.pushNamed(
-                                    context, '/registrationPage');
-                              }),
-                              child: const Text(
-                                'Aktivoi',
-                                style: TextStyle(fontSize: 34),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-            ],
-          ),
+        body: Container(
+      decoration: const BoxDecoration(
+        gradient: RadialGradient(
+          radius: BorderSide.strokeAlignOutside,
+          colors: [
+            Color.fromARGB(255, 255, 255, 255),
+            Color.fromARGB(255, 255, 255, 255)
+          ],
         ),
       ),
-    );
+      //height: double.infinity,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Spacer(),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+              child: Text(
+                'AChatI+',
+                style: TextStyle(
+                  //backgroundColor: Styles.backgroundGray,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 42,
+                  color: Styles.botGray,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 64),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(500),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/chatBox', arguments: email);
+                },
+                child: Image.asset(
+                  'assets/images/logo3.png',
+                  width: 300,
+                ),
+              ),
+            ),
+          const Spacer(),            
+          ],
+        ),
+      ),
+    ));
   }
 }

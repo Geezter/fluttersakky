@@ -10,15 +10,11 @@ class TextInfo extends StatelessWidget {
       required this.message,
       required this.sender,
       required this.date,
-      required this.amount,
-      required this.total,
       super.key});
   final String name;
   final String sender;
   final String message;
   final Timestamp date;
-  final int amount;
-  final int total;
 
   @override
   Widget build(BuildContext context) {

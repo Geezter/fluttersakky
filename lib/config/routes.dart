@@ -10,7 +10,7 @@ import 'package:kouluharjoittelu/registration_page.dart';
 class AppRoutes {
   static final pages = {
     main: (context) => const FrontPage(),
-    front: (context) => const ChatBox(),
+    front: (context) => ChatBox(userEmail: verificationEmail),
     box: (context) => const BoxPage(),
     profilePage: (context) => const ProfilePage(),
     registrationPage: (context) => const RegistrationPage(),
