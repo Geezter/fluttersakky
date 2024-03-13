@@ -15,11 +15,13 @@ class AppRoutes {
     profilePage: (context) => const ProfilePage(),
     registrationPage: (context) => const RegistrationPage(),
     verificationPage: (context) =>
-        VerificationPage(verificationEmail: verificationEmail),
-    userVerifiedPage: (context) => const UserVerifiedPage(),
+      VerificationPage(verificationEmail: 
+      verificationEmail),
+    userVerifiedPage: (context) => 
+      UserVerifiedPage(email: verificationEmail),
     aboutPage: (context) => const AboutPage(),
   };
-
+ 
   static const main = '/';
   static const front = '/chatBox';
   static const box = '/boxPage';

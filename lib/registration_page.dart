@@ -29,7 +29,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
 
     void verify(verificationEmail) {
-      print(verificationEmail + ' going to navigation');
       Navigator.pushNamed(context, '/verificationPage',
           arguments: verificationEmail);
     }
@@ -44,7 +43,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
       if (registeringResponse.isNotEmpty) {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', registeringResponse);
-        print('response on registering: ' + registeringResponse);
         verify(_emailEditingController.text);
       }
       isThisEnabled = true;
@@ -243,7 +241,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               alignment: Alignment.centerRight,
                               iconSize: itemSize,
                               onPressed: () {
-                                print('you pressed the button you sick fuck');
                               },
                               icon: Icon(
                                 Icons.info_outline_rounded,

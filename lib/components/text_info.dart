@@ -51,7 +51,7 @@ class TextInfo extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Padding(padding: EdgeInsets.only(left: 8)),
+                    const Padding(padding: EdgeInsets.only(left: 0)),
                     date,
                     const Spacer(),
                   ],
@@ -163,7 +163,7 @@ class TextInfoBot extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    const Padding(padding: EdgeInsets.only(left: 8)),
+                    const Padding(padding: EdgeInsets.only(left: 0)),
                     date,
                     const Spacer(),
                   ],

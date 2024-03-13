@@ -56,10 +56,8 @@ Future<String> handshake(String token) async {
 
     if (response.statusCode == 200) {
       var jsonResponse = response.body;
-      print('success on handshake');
       return jsonResponse;
     }
-    print('failed on handshake');
     return 'failed';
   } catch (error) {
     return ('Error: $error');
@@ -83,7 +81,6 @@ Future<String> getMessages(String token) async {
       var jsonResponse = response.body;
       return jsonResponse;
     }
-    print('failed on getMessages');
     return 'failed';
   } catch (error) {
     return ('Error: $error');

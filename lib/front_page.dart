@@ -21,7 +21,7 @@ class _FrontPageState extends State<FrontPage> {
   ///
   Future<void> _performHandshake() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await prefs.setString('token', '');
+     await prefs.setString('token', '');
     final String? token = prefs.getString('token');
     Future.delayed(const Duration(milliseconds: 2000), () async {
       if (token != null && token != 'token') {

@@ -32,39 +32,40 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   color: Color.fromARGB(239, 255, 255, 255),
                 ),
               ),
-              GestureDetector(
-                child: PopupMenuButton<MessageMenu>(
-                  color: Color.fromARGB(238, 255, 255, 255),
-                  onSelected: (value) {
-                    switch (value) {
-                      case MessageMenu.editProfile:
-                        Navigator.pushNamed(context, '/profilePage');
-                      case MessageMenu.botSettings:
-                      case MessageMenu.about:
-                        Navigator.pushNamed((context), '/aboutPage');
-                      default:
-                    }
-                  },
-                  icon: Icon(
-                    Icons.more_vert_rounded,
-                    size: 25,
-                    color: Styles.backgroundGray,
-                  ),
-                  itemBuilder: (context) {
-                    return [
-                      const PopupMenuItem(
-                          value: MessageMenu.editProfile,
-                          child: Text('Käyttäjäprofiili')),
-                      const PopupMenuItem(
-                          value: MessageMenu.botSettings,
-                          child: Text('Botin asetukset')),
-                      const PopupMenuItem(
-                          value: MessageMenu.about,
-                          child: Text('Tietoja sovelluksesta')),
-                    ];
-                  },
-                ),
-              ),
+// Commented out for later development
+              // GestureDetector(
+              //   child: PopupMenuButton<MessageMenu>(
+              //     color: Color.fromARGB(238, 255, 255, 255),
+              //     onSelected: (value) {
+              //       switch (value) {
+              //         case MessageMenu.editProfile:
+              //           Navigator.pushNamed(context, '/profilePage');
+              //         case MessageMenu.botSettings:
+              //         case MessageMenu.about:
+              //           Navigator.pushNamed((context), '/aboutPage');
+              //         default:
+              //       }
+              //     },
+              //     icon: Icon(
+              //       Icons.more_vert_rounded,
+              //       size: 25,
+              //       color: Styles.backgroundGray,
+              //     ),
+              //     itemBuilder: (context) {
+              //       return [
+              //         const PopupMenuItem(
+              //             value: MessageMenu.editProfile,
+              //             child: Text('Käyttäjäprofiili')),
+              //         const PopupMenuItem(
+              //             value: MessageMenu.botSettings,
+              //             child: Text('Botin asetukset')),
+              //         const PopupMenuItem(
+              //             value: MessageMenu.about,
+              //             child: Text('Tietoja sovelluksesta')),
+              //       ];
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ],

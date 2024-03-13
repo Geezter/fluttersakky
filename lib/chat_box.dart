@@ -59,11 +59,10 @@ class _ChatBoxState extends State<ChatBox> {
       setState(() {
         if (message == '/clear') {
           Navigator.pushNamed(context, '/chatBox', arguments: 'lorro');
-          // _msgs.clear();
+          _msgs.clear();
 
           return;
         }
-        print('meneekös tänne');
         _msgs.add(
           TextInfo(
             name: name,
@@ -86,7 +85,6 @@ class _ChatBoxState extends State<ChatBox> {
       });
     }
     if (_msgs.isNotEmpty && _autoScrollController.hasListeners) {
-      print('is it still trying to do this');
       _autoScrollController.animateToAnchor(
         duration: const Duration(milliseconds: 4000),
         curve: Curves.easeOut,
@@ -129,7 +127,6 @@ class _ChatBoxState extends State<ChatBox> {
   void initState() {
     super.initState();
     _initMessages().then((_) {
-      print(_msgs.isNotEmpty);
       if (_msgs.isNotEmpty) {
         // Delay the scrolling to ensure the list is built
         Future.delayed(const Duration(milliseconds: 100), () {
@@ -155,7 +152,7 @@ class _ChatBoxState extends State<ChatBox> {
           Expanded(
             child: AutoScroller(
               controller: _autoScrollController,
-              lengthIdentifier: _msgs.length * 90 + 10,
+              lengthIdentifier: _msgs.length * 50 + 10,
               anchorThreshold: 0,
               startAnchored: false,
               builder: (context, autoScrollController) {

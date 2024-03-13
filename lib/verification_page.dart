@@ -26,29 +26,24 @@ class _ConfirmationPageState extends State<VerificationPage> {
     final String verificationEmail = arguments;
 
     Future<String> transferKnowledge(verificationController) async {
-      print("e-mail: ${verificationEmail}");
       String code = verificationController.text;
       String verified = await verifyThis(verificationEmail, code);
       return verified;
     }
 
     void advance() {
-      print('advancing to verify done');
-      Navigator.pushNamed(context, '/userVerifiedPage');
+      Navigator.pushNamed(context, '/userVerifiedPage',
+        arguments: verificationEmail);
     }
 
     final screenHeight = MediaQuery.of(context).size.height - 150;
 
     void _verify(verificationController) async {
       final SharedPreferences prefs = await _prefs;
-      print('menossa apiin');
-      print(verificationController.text);
       String? verificationResponse =
           await transferKnowledge(verificationController);
-      print("response: ${verificationResponse}");
       if (verificationResponse != 'failed') {
         final String token = verificationResponse;
-        print('verifiointi tehty, token:  ' + token);
         //await prefs.setString('token', token);
         advance();
       }
@@ -129,10 +124,7 @@ class _ConfirmationPageState extends State<VerificationPage> {
                           }),
                         ),
                         onPressed: () {
-                          print('You verified you little bitch!');
                           _verify(_verificationEditingController);
-                          //_usernameEditingController.text = "";
-                          //_emailEditingController.text = "";
                         },
                         icon: const Icon(Icons.verified_user_outlined),
                         label: const Text(

@@ -61,7 +61,6 @@ class _ProfileItemState extends State<ProfileItem> {
               alignment: Alignment.centerRight,
               iconSize: itemSize,
               onPressed: () {
-                print('you pressed the button you sick fuck');
               },
               icon: Icon(
                 Icons.edit,

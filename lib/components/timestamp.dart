@@ -12,7 +12,6 @@ Future<String> getDate(time) async {
 
   String formattedDate =
       DateFormat('EEE d MMM kk:mm:ss', 'fi_FI').format(timestamp);
-  print(formattedDate);
   return formattedDate;
 }
 
