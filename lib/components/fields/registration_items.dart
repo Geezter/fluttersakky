@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kouluharjoittelu/style/buttons.dart';
 import 'package:kouluharjoittelu/style/styles.dart';
 
 class ProfileItem extends StatelessWidget {

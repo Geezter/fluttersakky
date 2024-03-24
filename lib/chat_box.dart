@@ -59,7 +59,7 @@ class _ChatBoxState extends State<ChatBox> {
       setState(() {
         if (message == '/clear') {
           Navigator.pushNamed(context, '/chatBox', arguments: 'lorro');
-          _msgs.clear();
+          //_msgs.clear();
 
           return;
         }
